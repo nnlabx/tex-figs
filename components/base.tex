@@ -5,13 +5,75 @@
 		text=white,
 		align=center
 	},
+	small text/.style={
+		font=\small\sffamily,
+		text=white,
+		align=center
+	},
+	large text/.style={
+		font=\Large\sffamily\bfseries,
+		text=white,
+		align=center
+	},
+	dark text/.style={
+		font=\large\sffamily,
+		text=black,
+		align=center
+	},
+	muted text/.style={
+		font=\normalsize\sffamily,
+		text=gray!70,
+		align=center
+	},
+	left text/.style={
+		font=\large\sffamily,
+		text=white,
+		align=left
+	},
+	right text/.style={
+		font=\large\sffamily,
+		text=white,
+		align=right
+	},
+	
 	%% ── GEOMETRY ──────────────────────────────────────────
 	base geometry/.style={
 		minimum width=5cm,
 		minimum height=2cm,
 		inner sep=6pt,
-    	outer sep=0pt      % <-- change from 2pt to 0pt
+		outer sep=0pt
 	},
+	small geometry/.style={
+		minimum width=3cm,
+		minimum height=1.2cm,
+		inner sep=4pt,
+		outer sep=0pt
+	},
+	large geometry/.style={
+		minimum width=8cm,
+		minimum height=3cm,
+		inner sep=10pt,
+		outer sep=0pt
+	},
+	wide geometry/.style={
+		minimum width=10cm,
+		minimum height=2cm,
+		inner sep=6pt,
+		outer sep=0pt
+	},
+	square geometry/.style={
+		minimum width=3cm,
+		minimum height=3cm,
+		inner sep=6pt,
+		outer sep=0pt
+	},
+	compact geometry/.style={
+		minimum width=2.5cm,
+		minimum height=1cm,
+		inner sep=3pt,
+		outer sep=0pt
+	},
+	
 	%% ── SHAPE (corner control ONLY) ───────────────────────
 	rounded shape/.style={
 		rounded corners=6pt
@@ -19,6 +81,13 @@
 	sharp shape/.style={
 		rounded corners=0pt
 	},
+	pill shape/.style={
+		rounded corners=20pt
+	},
+	soft shape/.style={
+		rounded corners=12pt
+	},
+	
 	%% ── BORDER CONTROL ────────────────────────────────────
 	with border/.style={
 		draw=black,
@@ -32,15 +101,186 @@
 		dashed,
 		line width=0.6pt
 	},
+	dotted border/.style={
+		draw=black,
+		dotted,
+		line width=0.8pt
+	},
+	thick border/.style={
+		draw=black,
+		line width=2.5pt
+	},
+	double border/.style={
+		draw=black,
+		double,
+		line width=0.6pt
+	},
+	accent border/.style={
+		draw=blue!60,
+		line width=1.5pt
+	},
+	warning border/.style={
+		draw=orange!80,
+		line width=1.5pt
+	},
+	danger border/.style={
+		draw=red!70,
+		line width=1.5pt
+	},
+	success border/.style={
+		draw=green!60!black,
+		line width=1.5pt
+	},
+	
 	%% ── FILL CONTROL ──────────────────────────────────────
 	no fill/.style={
 		fill=none
 	},
-	%% ── BASE BOX (neutral default) ────────────────────────
+	primary fill/.style={
+		fill=blue!70
+	},
+	secondary fill/.style={
+		fill=gray!50
+	},
+	success fill/.style={
+		fill=green!55!black
+	},
+	warning fill/.style={
+		fill=orange!75
+	},
+	danger fill/.style={
+		fill=red!65
+	},
+	info fill/.style={
+		fill=cyan!55
+	},
+	dark fill/.style={
+		fill=gray!85
+	},
+	light fill/.style={
+		fill=gray!15
+	},
+	accent fill/.style={
+		fill=violet!60
+	},
+	
+	%% ── GRADIENT FILL ─────────────────────────────────────
+	gradient blue/.style={
+		top color=blue!80,
+		bottom color=blue!40
+	},
+	gradient gray/.style={
+		top color=gray!70,
+		bottom color=gray!30
+	},
+	gradient green/.style={
+		top color=green!60!black,
+		bottom color=green!30
+	},
+	gradient red/.style={
+		top color=red!70,
+		bottom color=red!40
+	},
+	
+	%% ── SHADOW ────────────────────────────────────────────
+	%% Requires \usetikzlibrary{shadows}
+	soft shadow/.style={
+		drop shadow={
+			shadow xshift=2pt,
+			shadow yshift=-2pt,
+			opacity=0.3
+		}
+	},
+	hard shadow/.style={
+		drop shadow={
+			shadow xshift=4pt,
+			shadow yshift=-4pt,
+			opacity=0.5,
+			color=black
+		}
+	},
+	inner glow/.style={
+		inner color=white,
+		outer color=blue!60
+	},
+	
+	%% ── OPACITY / TRANSPARENCY ────────────────────────────
+	ghost/.style={
+		opacity=0.3
+	},
+	semi transparent/.style={
+		opacity=0.6
+	},
+	faded/.style={
+		fill opacity=0.4,
+		draw opacity=0.5
+	},
+	
+	%% ── COMPOSITE SEMANTIC STYLES ─────────────────────────
+	%% Ready-to-use combinations for common node roles
 	base box/.style={
 		base text,
 		base geometry,
 		no border,
 		no fill
+	},
+	card/.style={
+		base text,
+		base geometry,
+		rounded shape,
+		with border,
+		light fill,
+		dark text,
+		soft shadow
+	},
+	badge/.style={
+		small text,
+		compact geometry,
+		pill shape,
+		no border,
+		primary fill
+	},
+	alert box/.style={
+		base text,
+		base geometry,
+		sharp shape,
+		danger border,
+		danger fill
+	},
+	success box/.style={
+		base text,
+		base geometry,
+		rounded shape,
+		success border,
+		success fill
+	},
+	info box/.style={
+		base text,
+		base geometry,
+		rounded shape,
+		accent border,
+		info fill
+	},
+	ghost box/.style={
+		base text,
+		base geometry,
+		rounded shape,
+		dashed border,
+		no fill,
+		ghost
+	},
+	header box/.style={
+		large text,
+		wide geometry,
+		sharp shape,
+		no border,
+		dark fill
+	},
+	tag/.style={
+		small text,
+		compact geometry,
+		soft shape,
+		no border,
+		secondary fill
 	}
 }

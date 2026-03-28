@@ -1,24 +1,194 @@
 \tikzset{
-	% ── Base arrow ─────────────────────────────
+	%% ══════════════════════════════════════════════════════
+	%% BASE ARROW — all arrows inherit from this
+	%% ══════════════════════════════════════════════════════
 	arrow/.style={
 		-Stealth,
 		thick,
 		draw=black
 	},
-	% ── Straight connection ───────────────────
+	
+	%% ══════════════════════════════════════════════════════
+	%% 1. STRAIGHT ARROWS
+	%% ══════════════════════════════════════════════════════
 	arrow straight/.style={
 		arrow
 	},
-	% ── Elbow: vertical first, then horizontal ─
+	%% Forward / backward
+	arrow forward/.style={
+		-Stealth, thick, draw=black
+	},
+	arrow backward/.style={
+		Stealth-, thick, draw=black
+	},
+	%% Bidirectional
+	arrow both/.style={
+		Stealth-Stealth, thick, draw=black
+	},
+	%% No head (plain line)
+	line plain/.style={
+		thick, draw=black
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 2. ARROWHEAD STYLES
+	%% ══════════════════════════════════════════════════════
+	arrow stealth/.style={
+		-Stealth, thick, draw=black
+	},
+	arrow latex/.style={
+		-Latex, thick, draw=black
+	},
+	arrow triangle/.style={
+		-{Triangle}, thick, draw=black
+	},
+	arrow triangle open/.style={
+		-{Triangle[open]}, thick, draw=black
+	},
+	arrow triangle filled/.style={
+		-{Triangle[fill=black]}, thick, draw=black
+	},
+	arrow bar/.style={
+		-|, thick, draw=black
+	},
+	arrow circle end/.style={
+		-o, thick, draw=black
+	},
+	arrow circle filled end/.style={
+		-{Circle[fill=black]}, thick, draw=black
+	},
+	arrow diamond end/.style={
+		-{Diamond}, thick, draw=black
+	},
+	arrow diamond filled end/.style={
+		-{Diamond[fill=black]}, thick, draw=black
+	},
+	arrow tee/.style={
+		-{Tee}, thick, draw=black
+	},
+	arrow hooks/.style={
+		-{Hooks}, thick, draw=black
+	},
+	arrow bracket end/.style={
+		-{Bracket}, thick, draw=black
+	},
+	%% Double-line implies
+	arrow implies/.style={
+		Implies-Implies,
+		double,
+		double distance=2pt,
+		thick,
+		draw=black
+	},
+	%% Only implies forward
+	arrow implies forward/.style={
+		-Implies,
+		double,
+		double distance=2pt,
+		thick,
+		draw=black
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 3. LINE STYLES
+	%% ══════════════════════════════════════════════════════
+	arrow dashed/.style={
+		arrow, dashed
+	},
+	arrow dotted/.style={
+		arrow, dotted
+	},
+	arrow loosely dashed/.style={
+		arrow, loosely dashed
+	},
+	arrow densely dashed/.style={
+		arrow, densely dashed
+	},
+	arrow loosely dotted/.style={
+		arrow, loosely dotted
+	},
+	arrow densely dotted/.style={
+		arrow, densely dotted
+	},
+	line dashed/.style={
+		thick, draw=black, dashed
+	},
+	line dotted/.style={
+		thick, draw=black, dotted
+	},
+	line double/.style={
+		thick, draw=black, double, double distance=2pt
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 4. LINE WEIGHTS
+	%% ══════════════════════════════════════════════════════
+	arrow thin/.style={
+		-Stealth, thin, draw=black!50
+	},
+	arrow semithick/.style={
+		-Stealth, semithick, draw=black
+	},
+	arrow thick/.style={
+		arrow
+	},
+	arrow very thick/.style={
+		-Stealth, very thick, draw=black
+	},
+	arrow ultra thick/.style={
+		-Stealth, ultra thick, draw=black
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 5. CURVED ARROWS — bend
+	%% ══════════════════════════════════════════════════════
+	%% Soft (5°)
+	arrow left soft/.style={  arrow, bend left=5  },
+	arrow right soft/.style={ arrow, bend right=5 },
+	%% Default (15°)
+	arrow left/.style={       arrow, bend left=15  },
+	arrow right/.style={      arrow, bend right=15 },
+	%% Medium (30°)
+	arrow left mid/.style={   arrow, bend left=30  },
+	arrow right mid/.style={  arrow, bend right=30 },
+	%% Strong (45°)
+	arrow left strong/.style={ arrow, bend left=45  },
+	arrow right strong/.style={arrow, bend right=45 },
+	%% Sharp (60°)
+	arrow left sharp/.style={  arrow, bend left=60  },
+	arrow right sharp/.style={ arrow, bend right=60 },
+	%% U-turn (90°)
+	arrow left uturn/.style={  arrow, bend left=90  },
+	arrow right uturn/.style={ arrow, bend right=90 },
+	%% Curved dashed
+	arrow dashed left/.style={  arrow, dashed, bend left=25  },
+	arrow dashed right/.style={ arrow, dashed, bend right=25 },
+	%% Curved bidirectional
+	arrow both left/.style={  Stealth-Stealth, thick, draw=black, bend left=20  },
+	arrow both right/.style={ Stealth-Stealth, thick, draw=black, bend right=20 },
+	
+	%% ══════════════════════════════════════════════════════
+	%% 6. ELBOW / ORTHOGONAL ROUTING
+	%% ══════════════════════════════════════════════════════
+	%% Standard elbows
 	arrow elbow vh/.style={
 		arrow,
 		to path={(\tikztostart) |- (\tikztotarget)}
 	},
-	% ── Elbow: horizontal first, then vertical ─
 	arrow elbow hv/.style={
 		arrow,
 		to path={(\tikztostart) -| (\tikztotarget)}
 	},
+	%% Aliases
+	arrow right down/.style={
+		arrow,
+		to path={(\tikztostart) -| (\tikztotarget)}
+	},
+	arrow down right/.style={
+		arrow,
+		to path={(\tikztostart) |- (\tikztotarget)}
+	},
+	%% Chair: horizontal step at fixed offset below
 	arrow chair/.style={
 		arrow,
 		to path={
@@ -28,164 +198,271 @@
 			-- (\tikztotarget)
 		}
 	},
-	% ── Symmetric curved arrows ──────────────
-	arrow left/.style={arrow, bend left=5},
-	arrow right/.style={arrow, bend right=5},
-	% ── Strong curve ─────────────────────────
-	arrow left strong/.style={arrow, bend left=40},
-	arrow right strong/.style={arrow, bend right=40},
-	% ── Soft subtle curve ────────────────────
-	arrow left soft/.style={arrow, bend left=15},
-	arrow right soft/.style={arrow, bend right=15},
-	% ── Dashed arrows ────────────────────────
-	arrow dashed/.style={
+	%% Z-shaped (go right, drop, come back left)
+	arrow z right/.style={
 		arrow,
-		dashed
+		to path={
+			(\tikztostart)
+			-- ++(1.5cm, 0)
+			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	arrow dashed left/.style={
+	arrow z left/.style={
 		arrow,
-		dashed,
-		bend left=25
+		to path={
+			(\tikztostart)
+			-- ++(-1.5cm, 0)
+			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	arrow dashed right/.style={
+	%% S-shaped: drop, step right, drop again
+	arrow s down right/.style={
 		arrow,
-		dashed,
-		bend right=25
+		to path={
+			(\tikztostart)
+			-- ++(0, -1.5cm)
+			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	% ── Double-headed (bidirectional) ────────
-	arrow both/.style={
-		Stealth-Stealth,
-		thick,
-		draw=black
-	},
-	% ── No head (plain line) ─────────────────
-	line plain/.style={
-		thick,
-		draw=black
-	},
-	% ── Dotted line ──────────────────────────
-	line dotted/.style={
-		thick,
-		draw=black,
-		dotted
-	},
-	% ── Thin/subtle connector ─────────────────
-	arrow thin/.style={
-		-Stealth,
-		thin,
-		draw=black!50
-	},
-	% ── Colored semantic arrows ───────────────
-	arrow positive/.style={
+	arrow s down left/.style={
 		arrow,
-		draw=green!60!black
+		to path={
+			(\tikztostart)
+			-- ++(0, -1.5cm)
+			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	arrow negative/.style={
+	%% U-shaped bypasses
+	arrow bypass left/.style={
 		arrow,
-		draw=red!70!black
+		to path={
+			(\tikztostart)
+			-- ++(-1.5cm, 0)
+			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	arrow neutral/.style={
+	arrow bypass right/.style={
 		arrow,
-		draw=black!40
+		to path={
+			(\tikztostart)
+			-- ++(1.5cm, 0)
+			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
 	},
-	% ── Loop arrows (self-referencing nodes) ──
+	arrow bypass up/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(0, 1.5cm)
+			-- ([yshift=1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	arrow bypass down/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(0, -1.5cm)
+			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 7. LOOP / SELF-REFERENCING
+	%% ══════════════════════════════════════════════════════
 	arrow loop left/.style={
-		-Stealth,
-		thick,
-		draw=black,
-		loop,
-		out=210,
-		in=150,
-		looseness=5
+		-Stealth, thick, draw=black,
+		loop, out=210, in=150, looseness=5
 	},
 	arrow loop right/.style={
-		-Stealth,
-		thick,
-		draw=black,
-		loop,
-		out=330,
-		in=30,
-		looseness=5
+		-Stealth, thick, draw=black,
+		loop, out=330, in=30, looseness=5
 	},
-	% ── Implies (double line arrow) ───────────
-	arrow implies/.style={
-		Implies-Implies,
-		double,
-		double distance=2pt,
-		thick,
-		draw=black
+	arrow loop above/.style={
+		-Stealth, thick, draw=black,
+		loop, out=60, in=120, looseness=5
 	},
-	% ── Left, down, right ────────────────────
-	arrow left down right/.style={
+	arrow loop below/.style={
+		-Stealth, thick, draw=black,
+		loop, out=240, in=300, looseness=5
+	},
+	arrow loop above left/.style={
+		-Stealth, thick, draw=black,
+		loop, out=120, in=180, looseness=5
+	},
+	arrow loop above right/.style={
+		-Stealth, thick, draw=black,
+		loop, out=60, in=0, looseness=5
+	},
+	arrow loop below left/.style={
+		-Stealth, thick, draw=black,
+		loop, out=240, in=180, looseness=5
+	},
+	arrow loop below right/.style={
+		-Stealth, thick, draw=black,
+		loop, out=300, in=0, looseness=5
+	},
+	%% Tight vs loose loops
+	arrow loop tight/.style={
+		-Stealth, thick, draw=black,
+		loop, out=330, in=30, looseness=8
+	},
+	arrow loop loose/.style={
+		-Stealth, thick, draw=black,
+		loop, out=330, in=30, looseness=3
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 8. SEMANTIC / ROLE-BASED
+	%% ══════════════════════════════════════════════════════
+	arrow positive/.style={
+		arrow, draw=green!60!black
+	},
+	arrow negative/.style={
+		arrow, draw=red!70!black
+	},
+	arrow neutral/.style={
+		arrow, draw=black!40
+	},
+	arrow highlight/.style={
+		arrow, draw=orange!80!black, very thick
+	},
+	arrow muted/.style={
+		-Stealth, thin, draw=black!30, dashed
+	},
+	%% Dependency / association / inheritance
+	arrow dependency/.style={
+		arrow, dashed, draw=gray!70
+	},
+	arrow association/.style={
+		line plain
+	},
+	arrow inheritance/.style={
+		-{Triangle[open]}, thick, draw=black
+	},
+	arrow composition/.style={
+		{Diamond[fill=black]}-, thick, draw=black
+	},
+	arrow aggregation/.style={
+		{Diamond[open]}-, thick, draw=black
+	},
+	arrow realization/.style={
+		-{Triangle[open]}, thick, draw=black, dashed
+	},
+	%% Flow / process arrows
+	arrow flow/.style={
+		-Stealth, thick, draw=ocean
+	},
+	arrow return/.style={
+		-Stealth, thick, draw=black, dashed, bend left=20
+	},
+	arrow feedback/.style={
+		-Stealth, thick, draw=crimson, bend left=30
+	},
+	arrow data/.style={
+		-Latex, thick, draw=cobalt
+	},
+	arrow signal/.style={
+		-Stealth, thick, draw=teal, densely dashed
+	},
+	arrow trigger/.style={
+		-{Stealth[round]}, very thick, draw=amber
+	},
+	%% Annotation / callout
+	arrow callout/.style={
+		-Stealth, thin, draw=black!50, dashed, bend left=10
+	},
+	arrow annotation/.style={
+		-, thin, draw=black!40, dotted
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 9. DECORATED ARROWS
+	%% Requires \usetikzlibrary{decorations.markings}
+	%%          \usetikzlibrary{decorations.pathmorphing}
+	%%          \usetikzlibrary{decorations.pathreplacing}
+	%% ══════════════════════════════════════════════════════
+	%% Midpoint tick mark
+	arrow midtick/.style={
 		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(-1.5cm, 0)
-			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
-			-- (\tikztotarget)
+		postaction={
+			decorate,
+			decoration={
+				markings,
+				mark=at position 0.5 with {\draw (-2pt,-3pt) -- (-2pt,3pt);}
+			}
 		}
 	},
-	% ── Right, down, left ────────────────────
-	arrow right down left/.style={
+	%% Midpoint arrowhead (shows direction on long edges)
+	arrow mid stealth/.style={
 		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(1.5cm, 0)
-			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
-			-- (\tikztotarget)
+		postaction={
+			decorate,
+			decoration={
+				markings,
+				mark=at position 0.5 with {\arrow{Stealth}}
+			}
 		}
 	},
-	% ── Left, up, right ──────────────────────
-	arrow left up right/.style={
+	%% Double midpoint arrowheads
+	arrow mid double/.style={
 		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(-1.5cm, 0)
-			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
-			-- (\tikztotarget)
+		postaction={
+			decorate,
+			decoration={
+				markings,
+				mark=at position 0.35 with {\arrow{Stealth}},
+				mark=at position 0.65 with {\arrow{Stealth}}
+			}
 		}
 	},
-	% ── Right, up, left ──────────────────────
-	arrow right up left/.style={
+	%% Midpoint circle marker
+	arrow mid circle/.style={
 		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(1.5cm, 0)
-			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
-			-- (\tikztotarget)
+		postaction={
+			decorate,
+			decoration={
+				markings,
+				mark=at position 0.5 with {
+					\fill (0,0) circle (2pt);
+				}
+			}
 		}
 	},
-	% ── Down, right, down ────────────────────
-	arrow down right down/.style={
-		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(0, -1.5cm)
-			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
-			-- (\tikztotarget)
-		}
+	%% Snake / wavy line
+	arrow snake/.style={
+		-Stealth, thick, draw=black,
+		decorate,
+		decoration={snake, amplitude=2pt, segment length=6pt, post length=6pt}
 	},
-	% ── Down, left, down ─────────────────────
-	arrow down left down/.style={
-		arrow,
-		to path={
-			(\tikztostart)
-			-- ++(0, -1.5cm)
-			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
-			-- (\tikztotarget)
-		}
+	%% Zigzag
+	arrow zigzag/.style={
+		-Stealth, thick, draw=black,
+		decorate,
+		decoration={zigzag, amplitude=2pt, segment length=6pt, post length=6pt}
 	},
-	arrow right down/.style={
-		arrow,
-		to path={
-			(\tikztostart) -| (\tikztotarget)
-		}
+	%% Coil / spring
+	arrow coil/.style={
+		-Stealth, thick, draw=black,
+		decorate,
+		decoration={coil, aspect=0.4, segment length=4pt, post length=6pt}
 	},
-	% ── Down, then right ─────────────────────
-	arrow down right/.style={
-		arrow,
-		to path={
-			(\tikztostart) |- (\tikztotarget)
-		}
+	%% Brace (span indicator, no arrowhead)
+	brace above/.style={
+		decorate,
+		decoration={brace, amplitude=5pt, raise=3pt},
+		thick, draw=black
+	},
+	brace below/.style={
+		decorate,
+		decoration={brace, mirror, amplitude=5pt, raise=3pt},
+		thick, draw=black
 	},
 }

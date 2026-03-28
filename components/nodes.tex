@@ -1,104 +1,647 @@
-
 % in nodes/nodes.tex
 \tikzset{
-	box_width/.initial=5cm,
-	box_height/.initial=1cm,
-	box_inn_width/.initial=3.5cm,
-	box_inn_height/.initial=1cm,
-	small_width/.initial=1cm,
-	small_height/.initial=0.5cm,
-	label md border primary/.style={
-		base box,
-		rounded shape,
-		with border,
-		fill=primary3,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_width},
+	%% ══════════════════════════════════════════════════════
+	%% DIMENSION KEYS
+	%% ══════════════════════════════════════════════════════
+	box_width/.initial        = 5cm,
+	box_height/.initial       = 1cm,
+	box_inn_width/.initial    = 3.5cm,
+	box_inn_height/.initial   = 1cm,
+	box_wide_width/.initial   = 7cm,
+	box_wide_height/.initial  = 1cm,
+	box_tall_height/.initial  = 2cm,
+	small_width/.initial      = 1cm,
+	small_height/.initial     = 0.5cm,
+	icon_size/.initial        = 0.8cm,
+	chip_width/.initial       = 2cm,
+	chip_height/.initial      = 0.6cm,
+	pill_width/.initial       = 3cm,
+	pill_height/.initial      = 0.7cm,
+	header_width/.initial     = 8cm,
+	header_height/.initial    = 1.2cm,
+	section_width/.initial    = 6cm,
+	section_height/.initial   = 1.4cm,
+	
+	%% ══════════════════════════════════════════════════════
+	%% INTERNAL SHORTHAND MACROS
+	%% ══════════════════════════════════════════════════════
+	%% Full-width box geometry
+	box geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/box_width},
+		minimum height = \pgfkeysvalueof{/tikz/box_height}
+	},
+	%% Inner (slightly narrower) box
+	box inn geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/box_inn_width},
+		minimum height = \pgfkeysvalueof{/tikz/box_inn_height}
+	},
+	%% Wide box
+	box wide geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/box_wide_width},
+		minimum height = \pgfkeysvalueof{/tikz/box_wide_height}
+	},
+	%% Tall box
+	box tall geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/box_width},
+		minimum height = \pgfkeysvalueof{/tikz/box_tall_height}
+	},
+	%% Small label
+	small geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/small_width},
+		minimum height = \pgfkeysvalueof{/tikz/small_height}
+	},
+	%% Icon square
+	icon geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/icon_size},
+		minimum height = \pgfkeysvalueof{/tikz/icon_size}
+	},
+	%% Chip (inline tag)
+	chip geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/chip_width},
+		minimum height = \pgfkeysvalueof{/tikz/chip_height}
+	},
+	%% Pill badge
+	pill geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/pill_width},
+		minimum height = \pgfkeysvalueof{/tikz/pill_height}
+	},
+	%% Header banner
+	header geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/header_width},
+		minimum height = \pgfkeysvalueof{/tikz/header_height}
+	},
+	%% Section block
+	section geo/.style={
+		minimum width  = \pgfkeysvalueof{/tikz/section_width},
+		minimum height = \pgfkeysvalueof{/tikz/section_height}
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 1. MEDIUM FILLED + BORDER  (rounded, box-sized)
+	%%    Naming: node md <color>
+	%% ══════════════════════════════════════════════════════
+	node md seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, box geo
+	},
+	node md amber/.style={
+		base box, rounded shape, with border,
+		fill=amber, text=black, box geo
+	},
+	node md cream/.style={
+		base box, rounded shape, with border,
+		fill=cream, text=black, box geo
+	},
+	node md ice/.style={
+		base box, rounded shape, with border,
+		fill=ice, text=black, box geo
+	},
+	node md sky/.style={
+		base box, rounded shape, with border,
+		fill=sky, text=black, box geo
+	},
+	node md periwinkle/.style={
+		base box, rounded shape, with border,
+		fill=periwinkle, text=black, box geo
+	},
+	node md mint/.style={
+		base box, rounded shape, with border,
+		fill=mint, text=black, box geo
+	},
+	node md powder teal/.style={
+		base box, rounded shape, with border,
+		fill=powder teal, text=black, box geo
+	},
+	node md sand/.style={
+		base box, rounded shape, with border,
+		fill=sand, text=black, box geo
+	},
+	node md linen/.style={
+		base box, rounded shape, with border,
+		fill=linen, text=black, box geo
+	},
+	node md silver/.style={
+		base box, rounded shape, with border,
+		fill=silver, text=black, box geo
+	},
+	node md crimson/.style={
+		base box, rounded shape, with border,
+		fill=crimson, text=white, box geo
+	},
+	node md ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, box geo
+	},
+	node md teal/.style={
+		base box, rounded shape, with border,
+		fill=teal, text=white, box geo
+	},
+	node md pine/.style={
+		base box, rounded shape, with border,
+		fill=pine, text=white, box geo
+	},
+	node md cobalt/.style={
+		base box, rounded shape, with border,
+		fill=cobalt, text=white, box geo
+	},
+	node md sapphire/.style={
+		base box, rounded shape, with border,
+		fill=sapphire, text=white, box geo
+	},
+	node md walnut/.style={
+		base box, rounded shape, with border,
+		fill=walnut, text=white, box geo
+	},
+	node md espresso/.style={
+		base box, rounded shape, with border,
+		fill=espresso, text=white, box geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 2. MEDIUM SHARP (no rounded corners)
+	%%    Naming: node md sharp <color>
+	%% ══════════════════════════════════════════════════════
+	node md sharp seafoam/.style={
+		base box, sharp shape, with border,
+		fill=seafoam, text=black, box geo
+	},
+	node md sharp amber/.style={
+		base box, sharp shape, with border,
+		fill=amber, text=black, box geo
+	},
+	node md sharp ice/.style={
+		base box, sharp shape, with border,
+		fill=ice, text=black, box geo
+	},
+	node md sharp cobalt/.style={
+		base box, sharp shape, with border,
+		fill=cobalt, text=white, box geo
+	},
+	node md sharp crimson/.style={
+		base box, sharp shape, with border,
+		fill=crimson, text=white, box geo
+	},
+	node md sharp silver/.style={
+		base box, sharp shape, with border,
+		fill=silver, text=black, box geo
+	},
+	node md sharp teal/.style={
+		base box, sharp shape, with border,
+		fill=teal, text=white, box geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 3. OUTLINED ONLY (no fill)
+	%%    Naming: node md outline <color>
+	%% ══════════════════════════════════════════════════════
+	node md outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, box geo
+	},
+	node md outline dashed/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black, box geo
+	},
+	node md outline dotted/.style={
+		base box, rounded shape,
+		draw=black, dotted, line width=0.8pt,
+		no fill, text=black, box geo
+	},
+	node md outline ocean/.style={
+		base box, rounded shape,
+		draw=ocean, line width=1pt,
+		no fill, text=ocean, box geo
+	},
+	node md outline teal/.style={
+		base box, rounded shape,
+		draw=teal, line width=1pt,
+		no fill, text=teal, box geo
+	},
+	node md outline crimson/.style={
+		base box, rounded shape,
+		draw=crimson, line width=1pt,
+		no fill, text=crimson, box geo
+	},
+	node md outline amber/.style={
+		base box, rounded shape,
+		draw=amber, line width=1pt,
+		no fill, text=black, box geo
+	},
+	node md outline cobalt/.style={
+		base box, rounded shape,
+		draw=cobalt, line width=1pt,
+		no fill, text=cobalt, box geo
+	},
+	%% Ghost (faded outline)
+	node md ghost/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black!40, box geo,
+		opacity=0.5
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 4. INNER / NESTED BOXES  (slightly narrower)
+	%%    Naming: node inn <style>
+	%% ══════════════════════════════════════════════════════
+	node inn outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, box inn geo
+	},
+	node inn dashed/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black, box inn geo
+	},
+	node inn dotted/.style={
+		base box, rounded shape,
+		draw=black, dotted, line width=0.8pt,
+		no fill, text=black, box inn geo
+	},
+	node inn filled/.style={
+		base box, rounded shape, with border,
+		fill=silver, text=black, box inn geo
+	},
+	node inn ice/.style={
+		base box, rounded shape, with border,
+		fill=ice, text=black, box inn geo
+	},
+	node inn cream/.style={
+		base box, rounded shape, with border,
+		fill=cream, text=black, box inn geo
+	},
+	node inn mist/.style={
+		base box, rounded shape, with border,
+		fill=mist, text=black, box inn geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 5. WIDE NODES  (span full diagram width)
+	%%    Naming: node wide <color>
+	%% ══════════════════════════════════════════════════════
+	node wide seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, box wide geo
+	},
+	node wide ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, box wide geo
+	},
+	node wide silver/.style={
+		base box, rounded shape, with border,
+		fill=silver, text=black, box wide geo
+	},
+	node wide outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, box wide geo
+	},
+	node wide dashed/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black, box wide geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 6. TALL NODES  (double height, good for multi-line)
+	%%    Naming: node tall <color>
+	%% ══════════════════════════════════════════════════════
+	node tall seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, box tall geo
+	},
+	node tall ice/.style={
+		base box, rounded shape, with border,
+		fill=ice, text=black, box tall geo
+	},
+	node tall outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, box tall geo
+	},
+	node tall dashed/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black, box tall geo
+	},
+	node tall ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, box tall geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 7. SMALL LABELS / TAGS  (compact, pill or chip shape)
+	%%    Naming: node sm <color>
+	%% ══════════════════════════════════════════════════════
+	%% Background tones
+	node sm bg blue/.style={
+		base box, rounded shape, no border,
+		fill=bg blue, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm bg green/.style={
+		base box, rounded shape, no border,
+		fill=bg green, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm bg warm/.style={
+		base box, rounded shape, no border,
+		fill=bg warm, font=\small\sffamily,
+		text=black, small geo
+	},
+	%% Palette tones
+	node sm powder teal/.style={
+		base box, rounded shape, no border,
+		fill=powder teal, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm aqua/.style={
+		base box, rounded shape, no border,
+		fill=aqua, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm teal/.style={
+		base box, rounded shape, no border,
+		fill=teal, font=\small\sffamily,
+		text=white, small geo
+	},
+	node sm cobalt/.style={
+		base box, rounded shape, no border,
+		fill=cobalt, font=\small\sffamily,
+		text=white, small geo
+	},
+	node sm sky/.style={
+		base box, rounded shape, no border,
+		fill=sky, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm periwinkle/.style={
+		base box, rounded shape, no border,
+		fill=periwinkle, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm ice/.style={
+		base box, rounded shape, no border,
+		fill=ice, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm mint/.style={
+		base box, rounded shape, no border,
+		fill=mint, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm seafoam/.style={
+		base box, rounded shape, no border,
+		fill=seafoam, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm sand/.style={
+		base box, rounded shape, no border,
+		fill=sand, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm amber/.style={
+		base box, rounded shape, no border,
+		fill=amber, font=\small\sffamily,
+		text=black, small geo
+	},
+	node sm crimson/.style={
+		base box, rounded shape, no border,
+		fill=crimson, font=\small\sffamily,
+		text=white, small geo
+	},
+	node sm silver/.style={
+		base box, rounded shape, no border,
+		fill=silver, font=\small\sffamily,
+		text=black, small geo
+	},
+	%% Outlined small
+	node sm outline/.style={
+		base box, rounded shape, with border,
+		no fill, font=\small\sffamily,
+		text=black, small geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 8. CHIPS  (inline, very compact, pill-shaped)
+	%%    Naming: node chip <color>
+	%% ══════════════════════════════════════════════════════
+	node chip seafoam/.style={
+		base box, pill shape, no border,
+		fill=seafoam, font=\footnotesize\sffamily,
+		text=black, chip geo
+	},
+	node chip teal/.style={
+		base box, pill shape, no border,
+		fill=teal, font=\footnotesize\sffamily,
+		text=white, chip geo
+	},
+	node chip ocean/.style={
+		base box, pill shape, no border,
+		fill=ocean, font=\footnotesize\sffamily,
+		text=white, chip geo
+	},
+	node chip amber/.style={
+		base box, pill shape, no border,
+		fill=amber, font=\footnotesize\sffamily,
+		text=black, chip geo
+	},
+	node chip crimson/.style={
+		base box, pill shape, no border,
+		fill=crimson, font=\footnotesize\sffamily,
+		text=white, chip geo
+	},
+	node chip silver/.style={
+		base box, pill shape, no border,
+		fill=silver, font=\footnotesize\sffamily,
+		text=black, chip geo
+	},
+	node chip outline/.style={
+		base box, pill shape, with border,
+		no fill, font=\footnotesize\sffamily,
+		text=black, chip geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 9. ICON SQUARES  (small square, no text label needed)
+	%%    Naming: node icon <color>
+	%% ══════════════════════════════════════════════════════
+	node icon seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, icon geo
+	},
+	node icon teal/.style={
+		base box, rounded shape, with border,
+		fill=teal, text=white, icon geo
+	},
+	node icon ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, icon geo
+	},
+	node icon cobalt/.style={
+		base box, rounded shape, with border,
+		fill=cobalt, text=white, icon geo
+	},
+	node icon amber/.style={
+		base box, rounded shape, with border,
+		fill=amber, text=black, icon geo
+	},
+	node icon crimson/.style={
+		base box, rounded shape, with border,
+		fill=crimson, text=white, icon geo
+	},
+	node icon silver/.style={
+		base box, rounded shape, with border,
+		fill=silver, text=black, icon geo
+	},
+	node icon outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, icon geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 10. HEADER BANNERS  (full-width, prominent)
+	%%     Naming: node header <color>
+	%% ══════════════════════════════════════════════════════
+	node header espresso/.style={
+		base box, sharp shape, no border,
+		fill=espresso,
+		font=\large\sffamily\bfseries,
+		text=white, header geo
+	},
+	node header ocean/.style={
+		base box, sharp shape, no border,
+		fill=ocean,
+		font=\large\sffamily\bfseries,
+		text=white, header geo
+	},
+	node header teal/.style={
+		base box, sharp shape, no border,
+		fill=teal,
+		font=\large\sffamily\bfseries,
+		text=white, header geo
+	},
+	node header pine/.style={
+		base box, sharp shape, no border,
+		fill=pine,
+		font=\large\sffamily\bfseries,
+		text=white, header geo
+	},
+	node header silver/.style={
+		base box, sharp shape, with border,
+		fill=silver,
+		font=\large\sffamily\bfseries,
+		text=black, header geo
+	},
+	node header outline/.style={
+		base box, rounded shape, with border,
+		no fill,
+		font=\large\sffamily\bfseries,
+		text=black, header geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 11. SECTION BLOCKS  (group labels, slightly taller)
+	%%     Naming: node section <color>
+	%% ══════════════════════════════════════════════════════
+	node section seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, section geo
+	},
+	node section ice/.style={
+		base box, rounded shape, with border,
+		fill=ice, text=black, section geo
+	},
+	node section cream/.style={
+		base box, rounded shape, with border,
+		fill=cream, text=black, section geo
+	},
+	node section ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, section geo
+	},
+	node section outline/.style={
+		base box, rounded shape, with border,
+		no fill, text=black, section geo
+	},
+	node section dashed/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black, section geo
+	},
+	
+	%% ══════════════════════════════════════════════════════
+	%% 12. SEMANTIC ROLES  (ready-made, role-named nodes)
+	%% ══════════════════════════════════════════════════════
+	%% Process / action step
+	node process/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, box geo
+	},
+	%% Decision / branch
+	node decision/.style={
+		base box, sharp shape,
+		draw=amber, line width=1.2pt,
+		fill=cream, text=black, box geo
+	},
+	%% Start / end terminal
+	node terminal/.style={
+		base box, pill shape, with border,
+		fill=espresso, text=white,
+		minimum width=4cm,
 		minimum height=\pgfkeysvalueof{/tikz/box_height}
 	},
-	label md border secondary/.style={
-		base box,
-		with border,
-		rounded shape,
-		fill=accent,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_width},
-		minimum height=\pgfkeysvalueof{/tikz/box_height}
+	%% Data store / database indicator
+	node data/.style={
+		base box, rounded shape,
+		draw=cobalt, line width=1pt,
+		fill=ice, text=black, box geo
 	},
-	label md border tertiary/.style={
-		base box,           % already defaults to sharp shape
-		with border,
-		rounded shape,
-		fill=bg3,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_width},
-		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	%% External entity
+	node external/.style={
+		base box, sharp shape, with border,
+		fill=silver, text=black, box geo
 	},
-	label md border danger/.style={
-		base box,           % already defaults to sharp shape
-		with border,
-		rounded shape,
-		fill=p22,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_width},
-		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	%% Annotation / note
+	node note/.style={
+		base box, rounded shape, dashed border,
+		fill=cream, text=black,
+		font=\small\sffamily, box inn geo
 	},
-	label md border warning/.style={
-		base box,           % already defaults to sharp shape
-		with border,
-		rounded shape,
-		fill=p23,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_width},
-		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	%% Warning / alert
+	node warning/.style={
+		base box, rounded shape,
+		draw=amber, line width=1.2pt,
+		fill=linen, text=black, box geo
 	},
-	label md2 border no fill/.style={
-		base box,           % already defaults to sharp shape
-		with border,
-		rounded shape,
-		dashed border,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/box_inn_width},
-		minimum height=\pgfkeysvalueof{/tikz/box_inn_height},
+	%% Error / danger
+	node danger/.style={
+		base box, rounded shape,
+		draw=crimson, line width=1.2pt,
+		fill=crimson!15, text=black, box geo
 	},
-	label sm fill no border/.style={
-		base box,
-		no border,
-		rounded shape,
-		fill=bg1,
-		font=\small\sffamily,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/small_width},
-		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	%% Success / done
+	node success/.style={
+		base box, rounded shape,
+		draw=emerald, line width=1.2pt,
+		fill=mint, text=black, box geo
 	},
-	label sm fill no border green/.style={
-		base box,
-		no border,
-		rounded shape,
-		fill=p17,
-		font=\small\sffamily,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/small_width},
-		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	%% Info / neutral
+	node info/.style={
+		base box, rounded shape,
+		draw=ocean, line width=1.2pt,
+		fill=ice, text=black, box geo
 	},
-	label sm fill no border blue/.style={
-		base box,
-		no border,
-		rounded shape,
-		fill=p27,
-		font=\small\sffamily,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/small_width},
-		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	%% Highlight (call attention)
+	node highlight/.style={
+		base box, soft shape, with border,
+		fill=amber, text=black,
+		font=\large\sffamily\bfseries, box geo
 	},
-	label sm fill no border p21/.style={
-		base box,
-		no border,
-		rounded shape,
-		fill=p19,
-		font=\small\sffamily,
-		text=black,
-		minimum width=\pgfkeysvalueof{/tikz/small_width},
-		minimum height=\pgfkeysvalueof{/tikz/small_height}
-	}
+	%% Disabled / inactive
+	node disabled/.style={
+		base box, rounded shape,
+		draw=black!25, line width=0.6pt,
+		fill=silver, text=black!35,
+		font=\normalsize\sffamily, box geo
+	},
+	%% Placeholder / empty slot
+	node placeholder/.style={
+		base box, rounded shape, dashed border,
+		no fill, text=black!30,
+		font=\small\sffamily\itshape, box geo
+	},
 }
