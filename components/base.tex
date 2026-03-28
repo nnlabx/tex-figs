@@ -1,5 +1,5 @@
 \tikzset{
-	%% ── TEXT ──────────────────────────────────────────────
+	% ── TEXT ──────────────────────────────────────────────
 	base text/.style={
 		font=\large\sffamily,
 		text=white,
@@ -35,8 +35,7 @@
 		text=white,
 		align=right
 	},
-	
-	%% ── GEOMETRY ──────────────────────────────────────────
+	% ── GEOMETRY ──────────────────────────────────────────
 	base geometry/.style={
 		minimum width=5cm,
 		minimum height=2cm,
@@ -73,8 +72,7 @@
 		inner sep=3pt,
 		outer sep=0pt
 	},
-	
-	%% ── SHAPE (corner control ONLY) ───────────────────────
+	% ── SHAPE (corner control ONLY) ───────────────────────
 	rounded shape/.style={
 		rounded corners=6pt
 	},
@@ -87,8 +85,7 @@
 	soft shape/.style={
 		rounded corners=12pt
 	},
-	
-	%% ── BORDER CONTROL ────────────────────────────────────
+	% ── BORDER CONTROL ────────────────────────────────────
 	with border/.style={
 		draw=black,
 		line width=1pt
@@ -131,8 +128,7 @@
 		draw=green!60!black,
 		line width=1.5pt
 	},
-	
-	%% ── FILL CONTROL ──────────────────────────────────────
+	% ── FILL CONTROL ──────────────────────────────────────
 	no fill/.style={
 		fill=none
 	},
@@ -163,8 +159,7 @@
 	accent fill/.style={
 		fill=violet!60
 	},
-	
-	%% ── GRADIENT FILL ─────────────────────────────────────
+	% ── GRADIENT FILL ─────────────────────────────────────
 	gradient blue/.style={
 		top color=blue!80,
 		bottom color=blue!40
@@ -181,9 +176,8 @@
 		top color=red!70,
 		bottom color=red!40
 	},
-	
-	%% ── SHADOW ────────────────────────────────────────────
-	%% Requires \usetikzlibrary{shadows}
+	% ── SHADOW ────────────────────────────────────────────
+	% Requires \usetikzlibrary{shadows}
 	soft shadow/.style={
 		drop shadow={
 			shadow xshift=2pt,
@@ -203,8 +197,7 @@
 		inner color=white,
 		outer color=blue!60
 	},
-	
-	%% ── OPACITY / TRANSPARENCY ────────────────────────────
+	% ── OPACITY / TRANSPARENCY ────────────────────────────
 	ghost/.style={
 		opacity=0.3
 	},
@@ -215,9 +208,8 @@
 		fill opacity=0.4,
 		draw opacity=0.5
 	},
-	
-	%% ── COMPOSITE SEMANTIC STYLES ─────────────────────────
-	%% Ready-to-use combinations for common node roles
+	% ── COMPOSITE SEMANTIC STYLES ─────────────────────────
+	% Ready-to-use combinations for common node roles
 	base box/.style={
 		base text,
 		base geometry,
