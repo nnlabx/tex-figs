@@ -1,0 +1,46 @@
+\tikzset{
+	%% ── TEXT ──────────────────────────────────────────────
+	base text/.style={
+		font=\large\sffamily,
+		text=white,
+		align=center
+	},
+	%% ── GEOMETRY ──────────────────────────────────────────
+	base geometry/.style={
+		minimum width=5cm,
+		minimum height=2cm,
+		inner sep=6pt,
+    	outer sep=0pt      % <-- change from 2pt to 0pt
+	},
+	%% ── SHAPE (corner control ONLY) ───────────────────────
+	rounded shape/.style={
+		rounded corners=6pt
+	},
+	sharp shape/.style={
+		rounded corners=0pt
+	},
+	%% ── BORDER CONTROL ────────────────────────────────────
+	with border/.style={
+		draw=black,
+		line width=1pt
+	},
+	no border/.style={
+		draw=none
+	},
+	dashed border/.style={
+		draw=black,
+		dashed,
+		line width=0.6pt
+	},
+	%% ── FILL CONTROL ──────────────────────────────────────
+	no fill/.style={
+		fill=none
+	},
+	%% ── BASE BOX (neutral default) ────────────────────────
+	base box/.style={
+		base text,
+		base geometry,
+		no border,
+		no fill
+	}
+}

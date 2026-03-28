@@ -1,0 +1,191 @@
+\tikzset{
+	% ── Base arrow ─────────────────────────────
+	arrow/.style={
+		-Stealth,
+		thick,
+		draw=black
+	},
+	% ── Straight connection ───────────────────
+	arrow straight/.style={
+		arrow
+	},
+	% ── Elbow: vertical first, then horizontal ─
+	arrow elbow vh/.style={
+		arrow,
+		to path={(\tikztostart) |- (\tikztotarget)}
+	},
+	% ── Elbow: horizontal first, then vertical ─
+	arrow elbow hv/.style={
+		arrow,
+		to path={(\tikztostart) -| (\tikztotarget)}
+	},
+	arrow chair/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(0, -0.85cm)
+			-- ([yshift=-0.85cm]\tikztotarget |- \tikztostart)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Symmetric curved arrows ──────────────
+	arrow left/.style={arrow, bend left=5},
+	arrow right/.style={arrow, bend right=5},
+	% ── Strong curve ─────────────────────────
+	arrow left strong/.style={arrow, bend left=40},
+	arrow right strong/.style={arrow, bend right=40},
+	% ── Soft subtle curve ────────────────────
+	arrow left soft/.style={arrow, bend left=15},
+	arrow right soft/.style={arrow, bend right=15},
+	% ── Dashed arrows ────────────────────────
+	arrow dashed/.style={
+		arrow,
+		dashed
+	},
+	arrow dashed left/.style={
+		arrow,
+		dashed,
+		bend left=25
+	},
+	arrow dashed right/.style={
+		arrow,
+		dashed,
+		bend right=25
+	},
+	% ── Double-headed (bidirectional) ────────
+	arrow both/.style={
+		Stealth-Stealth,
+		thick,
+		draw=black
+	},
+	% ── No head (plain line) ─────────────────
+	line plain/.style={
+		thick,
+		draw=black
+	},
+	% ── Dotted line ──────────────────────────
+	line dotted/.style={
+		thick,
+		draw=black,
+		dotted
+	},
+	% ── Thin/subtle connector ─────────────────
+	arrow thin/.style={
+		-Stealth,
+		thin,
+		draw=black!50
+	},
+	% ── Colored semantic arrows ───────────────
+	arrow positive/.style={
+		arrow,
+		draw=green!60!black
+	},
+	arrow negative/.style={
+		arrow,
+		draw=red!70!black
+	},
+	arrow neutral/.style={
+		arrow,
+		draw=black!40
+	},
+	% ── Loop arrows (self-referencing nodes) ──
+	arrow loop left/.style={
+		-Stealth,
+		thick,
+		draw=black,
+		loop,
+		out=210,
+		in=150,
+		looseness=5
+	},
+	arrow loop right/.style={
+		-Stealth,
+		thick,
+		draw=black,
+		loop,
+		out=330,
+		in=30,
+		looseness=5
+	},
+	% ── Implies (double line arrow) ───────────
+	arrow implies/.style={
+		Implies-Implies,
+		double,
+		double distance=2pt,
+		thick,
+		draw=black
+	},
+	% ── Left, down, right ────────────────────
+	arrow left down right/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(-1.5cm, 0)
+			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Right, down, left ────────────────────
+	arrow right down left/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(1.5cm, 0)
+			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Left, up, right ──────────────────────
+	arrow left up right/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(-1.5cm, 0)
+			-- ([xshift=-1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Right, up, left ──────────────────────
+	arrow right up left/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(1.5cm, 0)
+			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Down, right, down ────────────────────
+	arrow down right down/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(0, -1.5cm)
+			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	% ── Down, left, down ─────────────────────
+	arrow down left down/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(0, -1.5cm)
+			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	arrow right down/.style={
+		arrow,
+		to path={
+			(\tikztostart) -| (\tikztotarget)
+		}
+	},
+	% ── Down, then right ─────────────────────
+	arrow down right/.style={
+		arrow,
+		to path={
+			(\tikztostart) |- (\tikztotarget)
+		}
+	},
+}

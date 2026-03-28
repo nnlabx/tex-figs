@@ -1,0 +1,73 @@
+\documentclass[tikz, border=15pt]{standalone}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+	positioning,
+	arrows.meta,
+	fit,
+	backgrounds,
+	shapes.misc,
+	shapes.geometric,
+	calc
+}
+\input{colors/colors}
+\input{base/base}
+\input{nodes/nodes}
+\input{arrows}
+\input{overlay}
+\begin{document}
+	\begin{tikzpicture}
+		\node[label md border primary] (taxonomy) at (0,0) {Taxonomy};
+		\node[label md border secondary] (relr) at (-5, -3) {Reinforcement Learning\\ Methods};
+		\node[label md border tertiary] (classical) at (5, -3) {Classical Methods};
+		\begin{pgfonlayer}{background}
+			\node[overlay1 box, fit=(relr)(classical)] {};
+		\end{pgfonlayer}
+		\node[label md border danger] (multiagent) at (-5, -6.5) {Multi-Agent RL\\ Systems};
+		\node[label md border warning] (singleagent) at (-5, -11.5) {Single-Agent RL\\ Systems};
+		\begin{pgfonlayer}{background}
+			\node[overlay1 box, fit=(multiagent)(singleagent)] {};
+		\end{pgfonlayer}
+		\node[label md2 border no fill](collaborative) at (0.5, -5) {Collaborative};
+		\node[label md2 border no fill](ensemble) at (0.5, -6.5) {Ensemble};
+		\node[label md2 border no fill](heirarchical) at (0.5, -8) {Heirarchical};
+		\begin{pgfonlayer}{background}
+			\node[overlay1 box, fit=(collaborative)(ensemble)(heirarchical)] (multi) {};
+		\end{pgfonlayer}
+		\node[label md2 border no fill](value) at (0.5, -10) {Value-based};
+		\node[label md2 border no fill](policy) at (0.5, -11.5) {Policy-based};
+		\node[label md2 border no fill](ac) at (0.5, -13) {Actor-Critic};
+		\begin{pgfonlayer}{background}
+			\node[overlay2 box, fit=(value)(policy)(ac)] {};
+		\end{pgfonlayer}
+		\node[label sm fill no border green](dqn) at (6, -10) {DQN | DDQN | SARSA | \\ D-DQN | Q-Learning};
+		\begin{pgfonlayer}{background}
+			\node[overlay1 box, fit=(dqn)](ov1) {};
+		\end{pgfonlayer}
+		\node[label sm fill no border blue](ppo) at (5.9, -13) {PPO | DDPG | TD3 | \\ A3C | A2C | SAC | DPG};
+		\node[label sm fill no border p21](trpo) at (7.1, -12) {TRPO | PG};
+		\begin{pgfonlayer}{background}
+			\node[overlay1 box, fit=(ppo)(trpo)](ov2) {};
+		\end{pgfonlayer}
+		\begin{pgfonlayer}{background}
+			\node[overlay3 box, fit=(ov1)(ov2)](g1) {};
+		\end{pgfonlayer}
+		\draw[arrow chair] (taxonomy.south) to (relr.north);
+		\draw[arrow chair] (taxonomy.south) to (classical.north);
+		\draw[arrow left down right] (relr.west) to (multiagent.west);
+		\draw[arrow left down right] (relr.west) to (singleagent.west);
+		\draw[arrow straight] (multiagent.east) to (collaborative.west);
+		\draw[arrow straight] (multiagent.east) to (ensemble.west);
+		\draw[arrow straight] (multiagent.east) to (heirarchical.west);
+		\draw[arrow straight] (singleagent.east) to (value.west);
+		\draw[arrow straight] (singleagent.east) to (policy.west);
+		\draw[arrow straight] (singleagent.east) to (ac.west);
+		\draw[arrow straight] (value.east) to (ov1);
+		\draw[arrow straight] (policy.east) to (ov2);
+		\draw[arrow straight] (ac.east) to (ppo);
+		\draw[arrow right down] (multi.east) to (g1.north);
+		\node[font=\small\sffamily, text=black, fill=white]
+		at ($(multi.east)!0.5!(g1.north |- multi.east)$)
+		[above] {Combination of};
+	\end{tikzpicture}
+\end{document}

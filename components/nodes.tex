@@ -1,0 +1,104 @@
+
+% in nodes/nodes.tex
+\tikzset{
+	box_width/.initial=5cm,
+	box_height/.initial=1cm,
+	box_inn_width/.initial=3.5cm,
+	box_inn_height/.initial=1cm,
+	small_width/.initial=1cm,
+	small_height/.initial=0.5cm,
+	label md border primary/.style={
+		base box,
+		rounded shape,
+		with border,
+		fill=primary3,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_height}
+	},
+	label md border secondary/.style={
+		base box,
+		with border,
+		rounded shape,
+		fill=accent,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_height}
+	},
+	label md border tertiary/.style={
+		base box,           % already defaults to sharp shape
+		with border,
+		rounded shape,
+		fill=bg3,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	},
+	label md border danger/.style={
+		base box,           % already defaults to sharp shape
+		with border,
+		rounded shape,
+		fill=p22,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	},
+	label md border warning/.style={
+		base box,           % already defaults to sharp shape
+		with border,
+		rounded shape,
+		fill=p23,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_height},
+	},
+	label md2 border no fill/.style={
+		base box,           % already defaults to sharp shape
+		with border,
+		rounded shape,
+		dashed border,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/box_inn_width},
+		minimum height=\pgfkeysvalueof{/tikz/box_inn_height},
+	},
+	label sm fill no border/.style={
+		base box,
+		no border,
+		rounded shape,
+		fill=bg1,
+		font=\small\sffamily,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/small_width},
+		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	},
+	label sm fill no border green/.style={
+		base box,
+		no border,
+		rounded shape,
+		fill=p17,
+		font=\small\sffamily,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/small_width},
+		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	},
+	label sm fill no border blue/.style={
+		base box,
+		no border,
+		rounded shape,
+		fill=p27,
+		font=\small\sffamily,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/small_width},
+		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	},
+	label sm fill no border p21/.style={
+		base box,
+		no border,
+		rounded shape,
+		fill=p19,
+		font=\small\sffamily,
+		text=black,
+		minimum width=\pgfkeysvalueof{/tikz/small_width},
+		minimum height=\pgfkeysvalueof{/tikz/small_height}
+	}
+}
