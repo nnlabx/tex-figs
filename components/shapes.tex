@@ -1,0 +1,917 @@
+% in shapes/shapes.tex
+% ══════════════════════════════════════════════════════
+% CUSTOM SHAPE LIBRARY
+% Defines reusable TikZ node shapes beyond the defaults.
+%
+% REQUIRES
+%   \usetikzlibrary{shapes.geometric}
+%   \usetikzlibrary{shapes.symbols}
+%   \usetikzlibrary{shapes.arrows}
+%   \usetikzlibrary{shapes.multipart}
+%   \usetikzlibrary{fit}
+%   \usetikzlibrary{calc}
+%
+% USAGE
+%   \node[shape name] at (x,y) {label};
+%   \node[shape name, fill=seafoam, text=black] at (x,y) {label};
+%   Combine freely with node styles from nodes.tex.
+%
+% SHAPE INDEX
+%   § 1  Base shape aliases       (rounded, sharp, pill, soft, hex, diamond)
+%   § 2  Geometric primitives     (circle, ellipse, triangle, trapezoid)
+%   § 3  Document / UI shapes     (folder, document, database, cloud)
+%   § 4  Flow / process shapes    (parallelogram, chevron, arrow box)
+%   § 5  Annotation shapes        (callout, flag, badge, tab)
+%   § 6  Technical shapes         (component, actor, package, note corner)
+%   § 7  Compound style aliases   (ready-made shape+color combos)
+% ══════════════════════════════════════════════════════
+
+% ──────────────────────────────────────────────────────
+% SHARED GEOMETRY DEFAULTS
+% ──────────────────────────────────────────────────────
+\tikzset{
+	% Inner padding applied to every shape unless overridden
+	shape base/.style={
+		inner sep    = 6pt,
+		outer sep    = 0pt,
+		text centered,
+		font         = \normalsize\sffamily,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 1  BASE SHAPE ALIASES
+%      These mirror the aliases used in nodes.tex so that
+%      `shape` and `node style` keys compose cleanly.
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% Rounded rectangle (default diagram node)
+	rounded shape/.style={
+		shape base,
+		shape           = rounded rectangle,
+		rounded rectangle arc length = 180,
+	},
+	% Sharp rectangle
+	sharp shape/.style={
+		shape base,
+		shape           = rectangle,
+	},
+	% Pill / stadium (fully rounded ends)
+	pill shape/.style={
+		shape base,
+		shape           = stadium,
+	},
+	% Softly rounded rectangle (less aggressive than rounded shape)
+	soft shape/.style={
+		shape base,
+		shape           = rectangle,
+		rounded corners = 4pt,
+	},
+	% Regular hexagon
+	hex shape/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 6,
+	},
+	% Diamond / rhombus
+	diamond shape/.style={
+		shape base,
+		shape           = diamond,
+		aspect          = 2,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 2  GEOMETRIC PRIMITIVES
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── Circle ─────────────────────────────────────────
+	shape circle/.style={
+		shape base,
+		shape           = circle,
+		inner sep       = 8pt,
+	},
+	shape circle sm/.style={
+		shape base,
+		shape           = circle,
+		inner sep       = 4pt,
+		font            = \small\sffamily,
+	},
+	shape circle lg/.style={
+		shape base,
+		shape           = circle,
+		inner sep       = 14pt,
+		font            = \large\sffamily,
+	},
+	% ── Ellipse ────────────────────────────────────────
+	shape ellipse/.style={
+		shape base,
+		shape           = ellipse,
+		inner sep       = 6pt,
+	},
+	% ── Equilateral triangle ───────────────────────────
+	shape triangle/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 3,
+		inner sep       = 6pt,
+	},
+	% ── Inverted triangle ──────────────────────────────
+	shape triangle inv/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 3,
+		shape border rotate = 180,
+		inner sep       = 6pt,
+	},
+	% ── Pentagon ───────────────────────────────────────
+	shape pentagon/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 5,
+		inner sep       = 6pt,
+	},
+	% ── Hexagon ────────────────────────────────────────
+	shape hexagon/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 6,
+		inner sep       = 6pt,
+	},
+	% ── Octagon ────────────────────────────────────────
+	shape octagon/.style={
+		shape base,
+		shape           = regular polygon,
+		regular polygon sides = 8,
+		inner sep       = 6pt,
+	},
+	% ── Trapezoid ──────────────────────────────────────
+	shape trapezoid/.style={
+		shape base,
+		shape           = trapezium,
+		trapezium left angle  = 70,
+		trapezium right angle = 110,
+		inner sep       = 6pt,
+	},
+	shape trapezoid inv/.style={
+		shape base,
+		shape           = trapezium,
+		trapezium left angle  = 110,
+		trapezium right angle = 70,
+		inner sep       = 6pt,
+	},
+	% ── Diamond ────────────────────────────────────────
+	shape diamond/.style={
+		shape base,
+		shape           = diamond,
+		aspect          = 2,
+		inner sep       = 4pt,
+	},
+	shape diamond tall/.style={
+		shape base,
+		shape           = diamond,
+		aspect          = 1,
+		inner sep       = 4pt,
+	},
+	% ── Star ───────────────────────────────────────────
+	shape star/.style={
+		shape base,
+		shape           = star,
+		star points     = 5,
+		star point ratio= 2.25,
+		inner sep       = 2pt,
+	},
+	shape star sm/.style={
+		shape base,
+		shape           = star,
+		star points     = 5,
+		star point ratio= 2.25,
+		inner sep       = 1pt,
+		font            = \small\sffamily,
+	},
+	% ── Cross / plus ───────────────────────────────────
+	shape cross/.style={
+		shape base,
+		shape           = cross out,
+		inner sep       = 6pt,
+		line width      = 2pt,
+	},
+	% ── X mark ─────────────────────────────────────────
+	shape x/.style={
+		shape base,
+		shape           = x mark,
+		inner sep       = 6pt,
+		line width      = 2pt,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 3  DOCUMENT / UI SHAPES
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── Cylinder / database ────────────────────────────
+	cylinder geo/.style={
+		minimum width  = 2cm,
+		minimum height = 1.5cm,
+	},
+	shape cylinder/.style={
+		shape base, cylinder geo,
+		shape           = cylinder,
+		aspect          = 0.35,
+		shape border rotate = 90,
+		inner sep       = 1pt,
+	},
+	shape database/.style={
+		shape base,
+		shape           = cylinder,
+		aspect          = 0.2,
+		shape border rotate = 90,
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+	% ── Cloud ──────────────────────────────────────────
+	shape cloud/.style={
+		shape base,
+		shape           = cloud,
+		cloud puffs     = 9,
+		cloud puff arc  = 120,
+		inner sep       = 8pt,
+		font            = \small\sffamily,
+	},
+	shape cloud sm/.style={
+		shape base,
+		shape           = cloud,
+		cloud puffs     = 7,
+		cloud puff arc  = 110,
+		inner sep       = 4pt,
+		font            = \footnotesize\sffamily,
+	},
+	% ── Tape / document ────────────────────────────────
+	shape tape/.style={
+		shape base,
+		shape           = tape,
+		tape bend top   = none,
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+	% ── Starburst / badge ──────────────────────────────
+	shape starburst/.style={
+		shape base,
+		shape           = starburst,
+		starburst points= 9,
+		starburst point height = 6pt,
+		inner sep       = 4pt,
+		font            = \small\sffamily,
+	},
+	% ── Forbidden / no-entry ───────────────────────────
+	shape forbidden/.style={
+		shape base,
+		shape           = forbidden sign,
+		inner sep       = 8pt,
+		line width      = 1.5pt,
+	},
+	% ── Signal / right-pointing arrow box ──────────────
+	shape signal right/.style={
+		shape base,
+		shape           = signal,
+		signal to       = east,
+		signal pointer angle = 110,
+		inner sep       = 6pt,
+	},
+	shape signal left/.style={
+		shape base,
+		shape           = signal,
+		signal to       = west,
+		signal pointer angle = 110,
+		inner sep       = 6pt,
+	},
+	shape signal both/.style={
+		shape base,
+		shape           = signal,
+		signal to       = both,
+		signal pointer angle = 110,
+		inner sep       = 6pt,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 4  FLOW / PROCESS SHAPES
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── Parallelogram (data / I/O in flowcharts) ───────
+	shape parallelogram/.style={
+		shape base,
+		shape           = parallelogram,
+		slant           = 0.2,
+		inner sep       = 6pt,
+	},
+	shape parallelogram inv/.style={
+		shape base,
+		shape           = parallelogram,
+		slant           = -0.2,
+		inner sep       = 6pt,
+	},
+	% ── Chamfered rectangle (process step variant) ─────
+	shape chamfer/.style={
+		shape base,
+		shape           = chamfered rectangle,
+		chamfered rectangle corners = {north east, south west},
+		inner sep       = 6pt,
+	},
+	% ── Single arrow ───────────────────────────────────
+	shape arrow right/.style={
+		shape base,
+		shape           = single arrow,
+		single arrow head extend = 3pt,
+		inner sep       = 6pt,
+		minimum height  = 1.2cm,
+	},
+	shape arrow left/.style={
+		shape base,
+		shape           = single arrow,
+		single arrow head extend = 3pt,
+		shape border rotate = 180,
+		inner sep       = 6pt,
+		minimum height  = 1.2cm,
+	},
+	% ── Double arrow ───────────────────────────────────
+	shape arrow double/.style={
+		shape base,
+		shape           = double arrow,
+		double arrow head extend = 3pt,
+		inner sep       = 6pt,
+		minimum height  = 1.2cm,
+	},
+	% ── Rounded rectangle with tab (process card) ──────
+	shape card/.style={
+		shape base,
+		shape           = rounded rectangle,
+		rounded rectangle arc length = 90,
+		inner sep       = 8pt,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 5  ANNOTATION SHAPES
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── Speech callout bubble ──────────────────────────
+	shape callout right/.style={
+		shape base,
+		shape           = ellipse callout,
+		callout absolute pointer = {(1cm, -0.6cm)},
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+	shape callout left/.style={
+		shape base,
+		shape           = ellipse callout,
+		callout absolute pointer = {(-1cm, -0.6cm)},
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+	% ── Rectangular callout ────────────────────────────
+	shape callout rect/.style={
+		shape base,
+		shape           = rectangle callout,
+		callout absolute pointer = {(0.5cm, -0.8cm)},
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+	% ── Thought bubble ─────────────────────────────────
+	shape thought/.style={
+		shape base,
+		shape           = cloud callout,
+		callout absolute pointer = {(0.4cm, -0.8cm)},
+		cloud puffs     = 7,
+		inner sep       = 6pt,
+		font            = \small\sffamily,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 6  TECHNICAL / UML SHAPES
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── UML actor (stick figure approximation) ─────────
+	% Use with a circle node above + label below manually,
+	% or use the `shape actor` style for a circle placeholder.
+	shape actor/.style={
+		shape base,
+		shape           = circle,
+		inner sep       = 10pt,
+		font            = \small\sffamily,
+	},
+	% ── Component box (rectangle with small notch icon) -
+	% Achieved via two-part rectangle; use multipart for
+	% proper UML component notation.
+	shape component/.style={
+		shape base,
+		shape           = rectangle,
+		rounded corners = 2pt,
+		inner sep       = 8pt,
+		font            = \small\sffamily,
+	},
+	% ── Note with folded corner ────────────────────────
+	% Folded corner is a built-in tikz shape.
+	shape note/.style={
+		shape base,
+		shape           = folded corner,
+		folded corner size = 8pt,
+		inner sep       = 8pt,
+		font            = \small\sffamily\itshape,
+	},
+	% ── Package / namespace box ────────────────────────
+	shape package/.style={
+		shape base,
+		shape           = rectangle,
+		inner sep       = 10pt,
+		outer sep       = 0pt,
+		font            = \small\sffamily,
+		% Tab label handled externally via label= key
+	},
+	% ── Magnetic tape ──────────────────────────────────
+	shape mag tape/.style={
+		shape base,
+		shape           = magnetic tape,
+		magnetic tape tail = 0.3cm,
+		inner sep       = 8pt,
+		font            = \small\sffamily,
+	},
+}
+% ══════════════════════════════════════════════════════
+% § 7  COMPOUND STYLE ALIASES
+%      Shape + color combos ready to drop into diagrams.
+%      Follow the naming convention:
+%        node <shape-short> <color>
+% ══════════════════════════════════════════════════════
+\tikzset{
+	net node/.style={
+		circle,
+		draw        = navy,
+		line width  = 2pt,
+		minimum size= 14pt,
+		inner sep   = 0pt,
+	},
+	% ── line style ─────────────────────────────────────
+	net edge/.style={
+		draw        = navy,
+		line width  = 2.2pt,
+		line cap    = round,
+	},
+	% ── Circles ────────────────────────────────────────
+	node circle seafoam/.style={
+		shape circle, with border,
+		fill=seafoam, text=black
+	},
+	node circle teal/.style={
+		shape circle, with border,
+		fill=teal, text=white
+	},
+	node circle ocean/.style={
+		shape circle, with border,
+		fill=ocean, text=white
+	},
+	node circle cobalt/.style={
+		shape circle, with border,
+		fill=cobalt, text=white
+	},
+	node circle amber/.style={
+		shape circle, with border,
+		fill=amber, text=black
+	},
+	node circle crimson/.style={
+		shape circle, with border,
+		fill=crimson, text=white
+	},
+	node circle silver/.style={
+		shape circle, with border,
+		fill=silver, text=black
+	},
+	node circle ice/.style={
+		shape circle, with border,
+		fill=ice, text=black
+	},
+	node circle outline/.style={
+		shape circle, with border,
+		no fill, text=black
+	},
+	% ── Diamonds ───────────────────────────────────────
+	node diamond seafoam/.style={
+		shape diamond, with border,
+		fill=seafoam, text=black
+	},
+	node diamond amber/.style={
+		shape diamond, with border,
+		fill=amber, text=black
+	},
+	node diamond crimson/.style={
+		shape diamond, with border,
+		fill=crimson, text=white
+	},
+	node diamond cobalt/.style={
+		shape diamond, with border,
+		fill=cobalt, text=white
+	},
+	node diamond outline/.style={
+		shape diamond, with border,
+		no fill, text=black
+	},
+	% ── Hexagons ───────────────────────────────────────
+	node hex seafoam/.style={
+		shape hexagon, with border,
+		fill=seafoam, text=black
+	},
+	node hex teal/.style={
+		shape hexagon, with border,
+		fill=teal, text=white
+	},
+	node hex ocean/.style={
+		shape hexagon, with border,
+		fill=ocean, text=white
+	},
+	node hex amber/.style={
+		shape hexagon, with border,
+		fill=amber, text=black
+	},
+	node hex silver/.style={
+		shape hexagon, with border,
+		fill=silver, text=black
+	},
+	node hex outline/.style={
+		shape hexagon, with border,
+		no fill, text=black
+	},
+	% ── Cylinders / databases ──────────────────────────
+	node db cobalt/.style={
+		shape database, with border,
+		fill=cobalt, text=white
+	},
+	node db teal/.style={
+		shape database, with border,
+		fill=teal, text=white
+	},
+	node db ice/.style={
+		shape database, with border,
+		fill=ice, text=black
+	},
+	node db silver/.style={
+		shape database, with border,
+		fill=silver, text=black
+	},
+	node db outline/.style={
+		shape database, with border,
+		no fill, text=black
+	},
+	% ── Clouds ─────────────────────────────────────────
+	node cloud ice/.style={
+		shape cloud, with border,
+		fill=ice, text=black
+	},
+	node cloud seafoam/.style={
+		shape cloud, with border,
+		fill=seafoam, text=black
+	},
+	node cloud silver/.style={
+		shape cloud, with border,
+		fill=silver, text=black
+	},
+	node cloud outline/.style={
+		shape cloud, with border,
+		no fill, text=black
+	},
+	% ── Parallelograms (I/O) ───────────────────────────
+	node io seafoam/.style={
+		shape parallelogram, with border,
+		fill=seafoam, text=black
+	},
+	node io amber/.style={
+		shape parallelogram, with border,
+		fill=amber, text=black
+	},
+	node io silver/.style={
+		shape parallelogram, with border,
+		fill=silver, text=black
+	},
+	node io outline/.style={
+		shape parallelogram, with border,
+		no fill, text=black
+	},
+	% ── Signals / chevrons ─────────────────────────────
+	node signal seafoam/.style={
+		shape signal right, with border,
+		fill=seafoam, text=black
+	},
+	node signal teal/.style={
+		shape signal right, with border,
+		fill=teal, text=white
+	},
+	node signal cobalt/.style={
+		shape signal right, with border,
+		fill=cobalt, text=white
+	},
+	node signal amber/.style={
+		shape signal right, with border,
+		fill=amber, text=black
+	},
+	node signal outline/.style={
+		shape signal right, with border,
+		no fill, text=black
+	},
+	% ── Notes / callouts ───────────────────────────────
+	node callout cream/.style={
+		shape callout right, with border,
+		fill=cream, text=black
+	},
+	node callout ice/.style={
+		shape callout right, with border,
+		fill=ice, text=black
+	},
+	node callout amber/.style={
+		shape callout right, with border,
+		fill=amber, text=black
+	},
+	node callout outline/.style={
+		shape callout right, with border,
+		no fill, text=black
+	},
+	node note cream/.style={
+		shape note, with border,
+		fill=cream, text=black
+	},
+	node note ice/.style={
+		shape note, with border,
+		fill=ice, text=black
+	},
+	node note linen/.style={
+		shape note, with border,
+		fill=linen, text=black
+	},
+	% ── Cylinders ──────────────────────────────────────
+	node cylinder seafoam/.style={
+		shape cylinder, with border,
+		fill=seafoam, text=black
+	},
+	node cylinder teal/.style={
+		shape cylinder, with border,
+		fill=teal, text=white
+	},
+	node cylinder ocean/.style={
+		shape cylinder, with border,
+		fill=ocean, text=white
+	},
+	node cylinder cobalt/.style={
+		shape cylinder, with border,
+		fill=cobalt, text=white
+	},
+	node cylinder amber/.style={
+		shape cylinder, with border,
+		fill=amber, text=black
+	},
+	node cylinder crimson/.style={
+		shape cylinder, with border,
+		fill=crimson, text=white
+	},
+	node cylinder ice/.style={
+		shape cylinder, with border,
+		fill=ice, text=black
+	},
+	node cylinder silver/.style={
+		shape cylinder, with border,
+		fill=silver, text=black
+	},
+	node cylinder outline/.style={
+		shape cylinder, with border,
+		no fill, text=black
+	},
+	% ── Stars ──────────────────────────────────────────
+	node star seafoam/.style={
+		shape star, with border,
+		fill=seafoam, text=black
+	},
+	node star teal/.style={
+		shape star, with border,
+		fill=teal, text=white
+	},
+	node star amber/.style={
+		shape star, with border,
+		fill=amber, text=black
+	},
+	node star crimson/.style={
+		shape star, with border,
+		fill=crimson, text=white
+	},
+	node star cobalt/.style={
+		shape star, with border,
+		fill=cobalt, text=white
+	},
+	node star silver/.style={
+		shape star, with border,
+		fill=silver, text=black
+	},
+	node star outline/.style={
+		shape star, with border,
+		no fill, text=black
+	},
+	% ── Triangles ──────────────────────────────────────
+	node triangle seafoam/.style={
+		shape triangle, with border,
+		fill=seafoam, text=black
+	},
+	node triangle teal/.style={
+		shape triangle, with border,
+		fill=teal, text=white
+	},
+	node triangle amber/.style={
+		shape triangle, with border,
+		fill=amber, text=black
+	},
+	node triangle crimson/.style={
+		shape triangle, with border,
+		fill=crimson, text=white
+	},
+	node triangle cobalt/.style={
+		shape triangle, with border,
+		fill=cobalt, text=white
+	},
+	node triangle silver/.style={
+		shape triangle, with border,
+		fill=silver, text=black
+	},
+	node triangle inv amber/.style={
+		shape triangle inv, with border,
+		fill=amber, text=black
+	},
+	node triangle inv crimson/.style={
+		shape triangle inv, with border,
+		fill=crimson, text=white
+	},
+	node triangle outline/.style={
+		shape triangle, with border,
+		no fill, text=black
+	},
+	% ── Ellipses ───────────────────────────────────────
+	node ellipse seafoam/.style={
+		shape ellipse, with border,
+		fill=seafoam, text=black
+	},
+	node ellipse teal/.style={
+		shape ellipse, with border,
+		fill=teal, text=white
+	},
+	node ellipse ocean/.style={
+		shape ellipse, with border,
+		fill=ocean, text=white
+	},
+	node ellipse amber/.style={
+		shape ellipse, with border,
+		fill=amber, text=black
+	},
+	node ellipse cobalt/.style={
+		shape ellipse, with border,
+		fill=cobalt, text=white
+	},
+	node ellipse ice/.style={
+		shape ellipse, with border,
+		fill=ice, text=black
+	},
+	node ellipse silver/.style={
+		shape ellipse, with border,
+		fill=silver, text=black
+	},
+	node ellipse outline/.style={
+		shape ellipse, with border,
+		no fill, text=black
+	},
+	% ── Starbursts ─────────────────────────────────────
+	node starburst seafoam/.style={
+		shape starburst, with border,
+		fill=seafoam, text=black
+	},
+	node starburst amber/.style={
+		shape starburst, with border,
+		fill=amber, text=black
+	},
+	node starburst crimson/.style={
+		shape starburst, with border,
+		fill=crimson, text=white
+	},
+	node starburst cobalt/.style={
+		shape starburst, with border,
+		fill=cobalt, text=white
+	},
+	node starburst outline/.style={
+		shape starburst, with border,
+		no fill, text=black
+	},
+	% ── Arrow shapes ───────────────────────────────────
+	node arrow seafoam/.style={
+		shape arrow right, with border,
+		fill=seafoam, text=black
+	},
+	node arrow teal/.style={
+		shape arrow right, with border,
+		fill=teal, text=white
+	},
+	node arrow ocean/.style={
+		shape arrow right, with border,
+		fill=ocean, text=white
+	},
+	node arrow amber/.style={
+		shape arrow right, with border,
+		fill=amber, text=black
+	},
+	node arrow crimson/.style={
+		shape arrow right, with border,
+		fill=crimson, text=white
+	},
+	node arrow cobalt/.style={
+		shape arrow right, with border,
+		fill=cobalt, text=white
+	},
+	node arrow silver/.style={
+		shape arrow right, with border,
+		fill=silver, text=black
+	},
+	node arrow outline/.style={
+		shape arrow right, with border,
+		no fill, text=black
+	},
+	% ── Trapezoids ─────────────────────────────────────
+	node trapezoid seafoam/.style={
+		shape trapezoid, with border,
+		fill=seafoam, text=black
+	},
+	node trapezoid teal/.style={
+		shape trapezoid, with border,
+		fill=teal, text=white
+	},
+	node trapezoid amber/.style={
+		shape trapezoid, with border,
+		fill=amber, text=black
+	},
+	node trapezoid cobalt/.style={
+		shape trapezoid, with border,
+		fill=cobalt, text=white
+	},
+	node trapezoid silver/.style={
+		shape trapezoid, with border,
+		fill=silver, text=black
+	},
+	node trapezoid outline/.style={
+		shape trapezoid, with border,
+		no fill, text=black
+	},
+	% ── Chamfered rectangles ───────────────────────────
+	node chamfer seafoam/.style={
+		shape chamfer, with border,
+		fill=seafoam, text=black
+	},
+	node chamfer teal/.style={
+		shape chamfer, with border,
+		fill=teal, text=white
+	},
+	node chamfer ocean/.style={
+		shape chamfer, with border,
+		fill=ocean, text=white
+	},
+	node chamfer amber/.style={
+		shape chamfer, with border,
+		fill=amber, text=black
+	},
+	node chamfer cobalt/.style={
+		shape chamfer, with border,
+		fill=cobalt, text=white
+	},
+	node chamfer silver/.style={
+		shape chamfer, with border,
+		fill=silver, text=black
+	},
+	node chamfer outline/.style={
+		shape chamfer, with border,
+		no fill, text=black
+	},
+	% ── Octagons ───────────────────────────────────────
+	node octagon seafoam/.style={
+		shape octagon, with border,
+		fill=seafoam, text=black
+	},
+	node octagon teal/.style={
+		shape octagon, with border,
+		fill=teal, text=white
+	},
+	node octagon cobalt/.style={
+		shape octagon, with border,
+		fill=cobalt, text=white
+	},
+	node octagon amber/.style={
+		shape octagon, with border,
+		fill=amber, text=black
+	},
+	node octagon crimson/.style={
+		shape octagon, with border,
+		fill=crimson, text=white
+	},
+	node octagon silver/.style={
+		shape octagon, with border,
+		fill=silver, text=black
+	},
+	node octagon outline/.style={
+		shape octagon, with border,
+		no fill, text=black
+	}
+}

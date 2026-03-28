@@ -267,6 +267,124 @@
 		base box, rounded shape, with border,
 		fill=mist, text=black, box inn geo
 	},
+	% ── filled ─────────────────────────────────────────
+	node inn seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, box inn geo
+	},
+	node inn mint/.style={
+		base box, rounded shape, with border,
+		fill=mint, text=black, box inn geo
+	},
+	node inn sky/.style={
+		base box, rounded shape, with border,
+		fill=sky, text=black, box inn geo
+	},
+	node inn periwinkle/.style={
+		base box, rounded shape, with border,
+		fill=periwinkle, text=black, box inn geo
+	},
+	node inn powder teal/.style={
+		base box, rounded shape, with border,
+		fill=powder teal, text=black, box inn geo
+	},
+	node inn sand/.style={
+		base box, rounded shape, with border,
+		fill=sand, text=black, box inn geo
+	},
+	node inn linen/.style={
+		base box, rounded shape, with border,
+		fill=linen, text=black, box inn geo
+	},
+	node inn amber/.style={
+		base box, rounded shape, with border,
+		fill=amber, text=black, box inn geo
+	},
+	node inn teal/.style={
+		base box, rounded shape, with border,
+		fill=teal, text=white, box inn geo
+	},
+	node inn ocean/.style={
+		base box, rounded shape, with border,
+		fill=ocean, text=white, box inn geo
+	},
+	node inn cobalt/.style={
+		base box, rounded shape, with border,
+		fill=cobalt, text=white, box inn geo
+	},
+	node inn pine/.style={
+		base box, rounded shape, with border,
+		fill=pine, text=white, box inn geo
+	},
+	node inn crimson/.style={
+		base box, rounded shape, with border,
+		fill=crimson, text=white, box inn geo
+	},
+	node inn walnut/.style={
+		base box, rounded shape, with border,
+		fill=walnut, text=white, box inn geo
+	},
+	node inn espresso/.style={
+		base box, rounded shape, with border,
+		fill=espresso, text=white, box inn geo
+	},
+	% ── outlined with color ────────────────────────────
+	node inn outline seafoam/.style={
+		base box, rounded shape,
+		draw=seafoam, line width=1pt,
+		no fill, text=black, box inn geo
+	},
+	node inn outline teal/.style={
+		base box, rounded shape,
+		draw=teal, line width=1pt,
+		no fill, text=teal, box inn geo
+	},
+	node inn outline ocean/.style={
+		base box, rounded shape,
+		draw=ocean, line width=1pt,
+		no fill, text=ocean, box inn geo
+	},
+	node inn outline cobalt/.style={
+		base box, rounded shape,
+		draw=cobalt, line width=1pt,
+		no fill, text=cobalt, box inn geo
+	},
+	node inn outline amber/.style={
+		base box, rounded shape,
+		draw=amber, line width=1pt,
+		no fill, text=black, box inn geo
+	},
+	node inn outline crimson/.style={
+		base box, rounded shape,
+		draw=crimson, line width=1pt,
+		no fill, text=crimson, box inn geo
+	},
+	% ── dashed with color ──────────────────────────────
+	node inn dashed seafoam/.style={
+		base box, rounded shape,
+		draw=seafoam, dashed, line width=0.8pt,
+		no fill, text=black, box inn geo
+	},
+	node inn dashed teal/.style={
+		base box, rounded shape,
+		draw=teal, dashed, line width=0.8pt,
+		no fill, text=teal, box inn geo
+	},
+	node inn dashed amber/.style={
+		base box, rounded shape,
+		draw=amber, dashed, line width=0.8pt,
+		no fill, text=black, box inn geo
+	},
+	node inn dashed cobalt/.style={
+		base box, rounded shape,
+		draw=cobalt, dashed, line width=0.8pt,
+		no fill, text=cobalt, box inn geo
+	},
+	node inn dashed crimson/.style={
+		base box, rounded shape,
+		draw=crimson, dashed, line width=0.8pt,
+		no fill, text=crimson, box inn geo
+	},
 	% ══════════════════════════════════════════════════════
 	% 5. WIDE NODES  (span full diagram width)
 	%    Naming: node wide <color>
@@ -313,6 +431,10 @@
 	},
 	node tall ocean/.style={
 		base box, rounded shape, with border,
+		fill=ocean, text=white, box tall geo
+	},
+	node tall nooutline ocean/.style={
+		base box, rounded shape, no border,
 		fill=ocean, text=white, box tall geo
 	},
 	% ══════════════════════════════════════════════════════
@@ -482,6 +604,47 @@
 		base box, rounded shape, with border,
 		no fill, text=black, icon geo
 	},
+	% ── LIGHT FILLS (text=black, pairs with existing dark versions) ──
+	node icon ice/.style={
+		base box, rounded shape, with border,
+		fill=ice, text=black, icon geo
+	},
+	node icon sky/.style={
+		base box, rounded shape, with border,
+		fill=sky, text=black, icon geo
+	},
+	node icon mint/.style={
+		base box, rounded shape, with border,
+		fill=mint, text=black, icon geo
+	},
+	node icon seafoam/.style={
+		base box, rounded shape, with border,
+		fill=seafoam, text=black, icon geo
+	},
+	node icon cream/.style={
+		base box, rounded shape, with border,
+		fill=cream, text=black, icon geo
+	},
+	node icon sand/.style={
+		base box, rounded shape, with border,
+		fill=sand, text=black, icon geo
+	},
+	node icon linen/.style={
+		base box, rounded shape, with border,
+		fill=linen, text=black, icon geo
+	},
+	node icon periwinkle/.style={
+		base box, rounded shape, with border,
+		fill=periwinkle, text=black, icon geo
+	},
+	node icon powder teal/.style={
+		base box, rounded shape, with border,
+		fill=powder teal, text=black, icon geo
+	},
+	node icon mist/.style={
+		base box, rounded shape, with border,
+		fill=mist, text=black, icon geo
+	},
 	% ══════════════════════════════════════════════════════
 	% 10. HEADER BANNERS  (full-width, prominent)
 	%     Naming: node header <color>
@@ -586,7 +749,7 @@
 	node note/.style={
 		base box, rounded shape, dashed border,
 		fill=cream, text=black,
-		font=\small\sffamily, box inn geo
+		font=\small\sffamily, box  geo
 	},
 	% Warning / alert
 	node warning/.style={

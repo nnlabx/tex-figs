@@ -1,4 +1,7 @@
 \documentclass[tikz, border=15pt]{standalone}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{
@@ -10,64 +13,236 @@
 	shapes.geometric,
 	calc
 }
-\input{colors/colors}
-\input{base/base}
-\input{nodes/nodes}
-\input{arrows}
-\input{overlay}
+\input{components/colors}
+\input{components/base}
+\input{components/nodes}
+\input{components/arrows}
+\input{components/overlay}
+\input{components/fonts}
+
+% ── Local palette ─────────────────────────────────────────────────────────────
+\definecolor{bg teal}    {HTML}{8BBFC4}
+\definecolor{navy}       {HTML}{1D4E6B}
+\definecolor{col salmon} {HTML}{C97B5E}
+\definecolor{col green}  {HTML}{6AAF5E}
+\definecolor{col teal}   {HTML}{5A9E8F}
+\definecolor{col yellow} {HTML}{E8C84A}
+
 \begin{document}
 	\begin{tikzpicture}
-		\node[label md border primary] (taxonomy) at (0,0) {Taxonomy};
-		\node[label md border secondary] (relr) at (-5, -3) {Reinforcement Learning\\ Methods};
-		\node[label md border tertiary] (classical) at (5, -3) {Classical Methods};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% OBSERVATION BLOCK
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node icon seafoam, font tier small]
+		(features) at (-4, 0)
+		{Feature Space ($\mathcal{F}$)
+			\\${\langle h, l, o, c\rangle} \in \mathbb{R}^{F}$};
+		
+		\node[node icon amber, font tier small]
+		(action) at (0, 0)
+		{Action ($\mathcal{A}$)
+			\\${\langle a_1, a_2,...,a_n \rangle} \in [0, 1]$};
+		
+		\node[node icon ice, font tier small]
+		(state) at (-4, -1.2)
+		{State Space ($\mathcal{S}$)\\
+			$\langle s_1, s_2,...,s_n\rangle$};
+		
+		\node[node icon ice, font tier small]
+		(reward) at (0, -1.2)
+		{Reward ($\mathcal{R}$)\\
+			$\langle r_1, r_2,...,r_n\rangle$};
+			
 		\begin{pgfonlayer}{background}
-			\node[overlay1 box, fit=(relr)(classical)] {};
+			\node[
+			overlay1 box,
+			fit     = (features)(action)(state)(reward),
+			label   = {[font=\large] above:Observation},
+			] (obsbox) {};
 		\end{pgfonlayer}
-		\node[label md border danger] (multiagent) at (-5, -6.5) {Multi-Agent RL\\ Systems};
-		\node[label md border warning] (singleagent) at (-5, -11.5) {Single-Agent RL\\ Systems};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% REPLAY BUFFER
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node md outline amber]
+		(replay) at (6, -1)
+		{Prioritized Experience
+			\\Replay Buffer
+			\\$\langle \mathcal{R}, \mathcal{S}, \mathcal{A} \rangle$};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% STATE REPRESENTATION
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node inn dashed crimson]
+		(state_rep) at (-1.9, -3.5)
+		{State
+			\\$\mathcal{S}_t \in \mathbb{R}^{[A \times L \times F]}$};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% NETWORK BLOCK
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node inn cream]
+		(actor) at (-3.7, -6)
+		{Actor network};
+		
+		\node[node inn mist]
+		(online) at (1, -6)
+		{(Target) Critic network};
+		
+		\node[node inn periwinkle]
+		(target) at (6, -6)
+		{(Online) Critic network};
+		
 		\begin{pgfonlayer}{background}
-			\node[overlay1 box, fit=(multiagent)(singleagent)] {};
+			\node[overlay2 box, fit=(online)(target)] (criticbox) {};
 		\end{pgfonlayer}
-		\node[label md2 border no fill](collaborative) at (0.5, -5) {Collaborative};
-		\node[label md2 border no fill](ensemble) at (0.5, -6.5) {Ensemble};
-		\node[label md2 border no fill](heirarchical) at (0.5, -8) {Heirarchical};
+		
 		\begin{pgfonlayer}{background}
-			\node[overlay1 box, fit=(collaborative)(ensemble)(heirarchical)] (multi) {};
+			\node[overlay3 box, fit=(criticbox)(actor)] (network) {};
 		\end{pgfonlayer}
-		\node[label md2 border no fill](value) at (0.5, -10) {Value-based};
-		\node[label md2 border no fill](policy) at (0.5, -11.5) {Policy-based};
-		\node[label md2 border no fill](ac) at (0.5, -13) {Actor-Critic};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% NETWORK OUTPUTS
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node inn dashed crimson]
+		(actor_out) at (-3.7, -8.5)
+		{$\mathcal{A}_t \in \mathbb{R}^{[N]}$
+			\\$\mathfrak{C} \in \mathbb{R}^{[N \times N]}$};
+		
+		\node[node inn dashed crimson]
+		(online_out) at (1, -8.5)
+		{$Q_O \in \mathbb{R}^{[Q \times N]}$};
+		
+		\node[node inn dashed crimson]
+		(target_out) at (6, -8.5)
+		{$Q_T \in \mathbb{R}^{[Q \times N]}$};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% TARGET & LOSS
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node wide silver]
+		(y) at (3.5, -10.5)
+		{$\hat{y}_j = r + \gamma
+			\left( \hat{q}_j - \beta \log \pi_\phi(a' \mid s') \right)$};
+		
+		\node[node sm outline]
+		(p_loss) at (-3.7, -10.5)
+		{policy loss $(\mathcal{L}_p)$};
+		
+		\node[node sm outline]
+		(y_loss) at (8.5, -10.5)
+		{critic loss $(\mathcal{L}_c)$};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% QUANTUM BLOCK
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\node[node tall nooutline ocean]
+		(qaoa) at (-2.5, -13)
+		{Quantum Approximate
+			\\Optimization Algorithm (QAOA)};
+		
 		\begin{pgfonlayer}{background}
-			\node[overlay2 box, fit=(value)(policy)(ac)] {};
+			\node[overlay double box, fit=(qaoa)] (qaoa_o) {};
 		\end{pgfonlayer}
-		\node[label sm fill no border green](dqn) at (6, -10) {DQN | DDQN | SARSA | \\ D-DQN | Q-Learning};
-		\begin{pgfonlayer}{background}
-			\node[overlay1 box, fit=(dqn)](ov1) {};
-		\end{pgfonlayer}
-		\node[label sm fill no border blue](ppo) at (5.9, -13) {PPO | DDPG | TD3 | \\ A3C | A2C | SAC | DPG};
-		\node[label sm fill no border p21](trpo) at (7.1, -12) {TRPO | PG};
-		\begin{pgfonlayer}{background}
-			\node[overlay1 box, fit=(ppo)(trpo)](ov2) {};
-		\end{pgfonlayer}
-		\begin{pgfonlayer}{background}
-			\node[overlay3 box, fit=(ov1)(ov2)](g1) {};
-		\end{pgfonlayer}
-		\draw[arrow chair] (taxonomy.south) to (relr.north);
-		\draw[arrow chair] (taxonomy.south) to (classical.north);
-		\draw[arrow left down right] (relr.west) to (multiagent.west);
-		\draw[arrow left down right] (relr.west) to (singleagent.west);
-		\draw[arrow straight] (multiagent.east) to (collaborative.west);
-		\draw[arrow straight] (multiagent.east) to (ensemble.west);
-		\draw[arrow straight] (multiagent.east) to (heirarchical.west);
-		\draw[arrow straight] (singleagent.east) to (value.west);
-		\draw[arrow straight] (singleagent.east) to (policy.west);
-		\draw[arrow straight] (singleagent.east) to (ac.west);
-		\draw[arrow straight] (value.east) to (ov1);
-		\draw[arrow straight] (policy.east) to (ov2);
-		\draw[arrow straight] (ac.east) to (ppo);
-		\draw[arrow right down] (multi.east) to (g1.north);
-		\node[font=\small\sffamily, text=black, fill=white]
-		at ($(multi.east)!0.5!(g1.north |- multi.east)$)
-		[above] {Combination of};
+		
+		\node[node inn dashed teal, rotate=90]
+		(q_out) at (3.5, -13)
+		{Candidate
+			\\portfolio weights
+			\\$\mathbf{P}_W \in \mathbf{R}^{K}$};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — observation → buffer / state
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow straight]
+		([yshift=-.4cm]obsbox.east) to (replay.west) {};
+		
+		\draw[arrow straight]
+		(obsbox.south) to (state_rep.north) {};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — state → networks
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow bypass down] (state_rep.south) to (actor.north)  {};
+		\draw[arrow bypass down] (state_rep.south) to (online.north) {};
+		\draw[arrow bypass down] (state_rep.south) to (target.north) {};
+		
+		\draw[arrow straight, draw=orange]
+		([xshift=5pt]replay.south) to ([xshift=5pt]target.north) {};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — networks → outputs
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow straight] (actor.south)  to (actor_out.north)  {};
+		\draw[arrow straight] (online.south) to (online_out.north) {};
+		\draw[arrow straight] (target.south) to (target_out.north) {};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — outputs → target / loss
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow bypass down] (online_out.south) to (y.north) {};
+		\draw[arrow bypass down] (target_out.south) to (y.north) {};
+		
+		\draw[arrow straight] (actor_out.south) to (p_loss.north) {};
+		\draw[arrow straight] (y.west)          to (p_loss.east)  {};
+		\draw[arrow straight] (y.east)          to (y_loss.west)  {};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — back propagation
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow straight, draw=red]
+		(p_loss.east) to[bend right=45] (actor.east) {};
+		
+		\node[rotate=90, anchor=south, font=\small\sffamily]
+		at ($([xshift=8.0cm]p_loss.west)!0.5!
+		([xshift=-1.0cm]p_loss.west |- actor.west)$)
+		{back propagation};
+		
+		\draw[arrow straight, draw=red]
+		(y_loss.north) to[bend right=45] (criticbox.east) {};
+		
+		\node[rotate=90, anchor=south, font=\small\sffamily]
+		at ($([xshift=4.5cm]y_loss.west)!0.5!
+		([xshift=-1.0cm]y_loss.west |- criticbox.west)$)
+		{back propagation};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — quantum loop
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow straight]
+		(actor_out.west) to[bend right=45] (qaoa.west) {};
+		
+		\draw[arrow straight]
+		(qaoa_o.east) to (q_out.north) {};
+		
+		\draw[arrow bypass right]
+		(q_out.south) to ([yshift=1cm]obsbox.east) {};
+		
+		% ══════════════════════════════════════════════════════════════════════════
+		% EDGES — reward annotation
+		% ══════════════════════════════════════════════════════════════════════════
+		
+		\draw[arrow straight]
+		(obsbox.west) to[bend right=45] (network.west) {};
+		
+		\node[font=\small\sffamily, anchor=south, rotate=90]
+		at ($([xshift=0.3cm]obsbox.west)!0.5!
+		([xshift=-1.0cm]obsbox.west |- criticbox.west)$)
+		{Reward $(\mathcal{R}) \in \mathbb{R}^1$};
+		
 	\end{tikzpicture}
 \end{document}

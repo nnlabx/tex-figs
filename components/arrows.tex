@@ -241,11 +241,11 @@
 		}
 	},
 	arrow bypass right/.style={
-		arrow,
+		arrow, rounded corners = 5pt,
 		to path={
 			(\tikztostart)
-			-- ++(1.5cm, 0)
-			-- ([xshift=1.5cm]\tikztostart |- \tikztotarget)
+			-- ++(5.5cm, 0)
+			-- ([xshift=5.5cm]\tikztostart |- \tikztotarget)
 			-- (\tikztotarget)
 		}
 	},
@@ -259,11 +259,37 @@
 		}
 	},
 	arrow bypass down/.style={
+		arrow, rounded corners = 5pt,
+		to path={
+			(\tikztostart)
+			-- ++(0, -0.6cm)
+			-- ([yshift=-0.6cm]\tikztostart -| \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	arrow left up right/.style={
 		arrow,
 		to path={
 			(\tikztostart)
-			-- ++(0, -1.5cm)
-			-- ([yshift=-1.5cm]\tikztostart -| \tikztotarget)
+			-- ++(-1.0cm, 0)
+			-- ([xshift=-1.0cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	arrow up left/.style={
+		arrow,
+			to path={
+			(\tikztostart)
+			-- ([xshift=0cm]\tikztostart |- \tikztotarget)
+			-- (\tikztotarget)
+		}
+	},
+	arrow left down right/.style={
+		arrow,
+		to path={
+			(\tikztostart)
+			-- ++(-\pgfkeysvalueof{/tikz/ldr offset}, 0)
+			-- ([xshift=-\pgfkeysvalueof{/tikz/ldr offset}]\tikztostart |- \tikztotarget)
 			-- (\tikztotarget)
 		}
 	},
@@ -311,7 +337,6 @@
 		-Stealth, thick, draw=black,
 		loop, out=330, in=30, looseness=3
 	},
-	
 	% ══════════════════════════════════════════════════════
 	% 8. SEMANTIC / ROLE-BASED
 	% ══════════════════════════════════════════════════════

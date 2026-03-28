@@ -1,0 +1,111 @@
+% in fonts/fonts.tex
+% ══════════════════════════════════════════════════════
+% FONT SIZE SYSTEM
+% Maps a 5-tier scale to the node size hierarchy:
+%   Tier 1 – Header   (node header *, node highlight)
+%   Tier 2 – Section  (node section *, node wide *)
+%   Tier 3 – Medium   (node md *, node tall *, semantic nodes)
+%   Tier 4 – Small    (node sm *, node inn *, node note)
+%   Tier 5 – Chip     (node chip *, node icon *, node disabled)
+%
+% USAGE
+%   Option A – use the pre-built font style keys directly:
+%     \node [node md seafoam, font tier header] {Title};
+%
+%   Option B – set the global default tier once at the top
+%   of your tikzpicture, then individual nodes can override:
+%     \tikzset{font tier/.style={font tier medium}}
+%     ...
+%     \node [node header ocean, font tier header] {Big title};
+%     \node [node md seafoam] {Normal body node};   % uses default
+%
+%   Option C – override the font key inside a node style
+%   (useful when defining new compound styles):
+%     node md bold seafoam/.style={
+	%         node md seafoam, font tier medium bold
+	%     },
+% ══════════════════════════════════════════════════════
+\tikzset{
+	% ── RAW SIZE KEYS (single source of truth) ─────────
+	% Change the pt values here to rescale the entire system.
+	font size header/.style   = { font = \large\sffamily\bfseries  },   % ~14.4 pt bold
+	font size section/.style  = { font = \normalsize\sffamily\bfseries}, % ~12 pt bold
+	font size medium/.style   = { font = \normalsize\sffamily          },% ~12 pt regular
+	font size small/.style    = { font = \small\sffamily               },% ~10.95 pt
+	font size footnote/.style = { font = \footnotesize\sffamily        },% ~10 pt
+	font size script/.style   = { font = \scriptsize\sffamily          },% ~8 pt
+	% ── ITALIC VARIANTS ────────────────────────────────
+	font size header it/.style   = { font = \large\sffamily\bfseries\itshape   },
+	font size medium it/.style   = { font = \normalsize\sffamily\itshape        },
+	font size small it/.style    = { font = \small\sffamily\itshape             },
+	font size footnote it/.style = { font = \footnotesize\sffamily\itshape      },
+	% ── TIER ALIASES (semantic names used in node styles) ─
+	% These are what you reference in your diagram code.
+	font tier header/.style   = { font size header   },
+	font tier section/.style  = { font size section  },
+	font tier medium/.style   = { font size medium   },
+	font tier small/.style    = { font size small    },
+	font tier chip/.style     = { font size footnote },
+	% convenient bold aliases
+	font tier header bold/.style   = { font size header   },% already bold
+	font tier section bold/.style  = { font size section  },% already bold
+	font tier medium bold/.style   = { font = \normalsize\sffamily\bfseries },
+	font tier small bold/.style    = { font = \small\sffamily\bfseries      },
+	font tier chip bold/.style     = { font = \footnotesize\sffamily\bfseries},
+	% ── DEFAULT TIER ───────────────────────────────────
+	% Set this once in your tikzpicture preamble to choose
+	% which tier is used when no explicit tier is specified.
+	% e.g.  \tikzset{font tier/.style={font tier medium}}
+	font tier/.style = { font tier medium },
+}
+% ══════════════════════════════════════════════════════
+% RECOMMENDED PAIRINGS
+% (copy-paste into your node style definitions)
+% ══════════════════════════════════════════════════════
+%
+%  node header *     → font tier header   (\large\sffamily\bfseries)
+%  node section *    → font tier section  (\normalsize\sffamily\bfseries)
+%  node wide *       → font tier section  (\normalsize\sffamily\bfseries)
+%  node md *         → font tier medium   (\normalsize\sffamily)
+%  node md sharp *   → font tier medium   (\normalsize\sffamily)
+%  node tall *       → font tier medium   (\normalsize\sffamily)
+%  node inn *        → font tier small    (\small\sffamily)
+%  node sm *         → font tier small    (\small\sffamily)
+%  node note         → font tier small it (\small\sffamily\itshape)
+%  node chip *       → font tier chip     (\footnotesize\sffamily)
+%  node icon *       → font tier chip     (\footnotesize\sffamily)
+%  node disabled     → font tier medium   (\normalsize\sffamily)
+%  node placeholder  → font tier small it (\small\sffamily\itshape)
+%
+% ══════════════════════════════════════════════════════
+% EXAMPLE — applying tiers inside existing node styles:
+% ══════════════════════════════════════════════════════
+%
+%  In nodes/nodes.tex, update node header espresso like so:
+%
+%    node header espresso/.style={
+	%        base box, sharp shape, no border,
+	%        fill=espresso,
+	%        font tier header,        % ← replaces font=\large\sffamily\bfseries
+	%        text=white, header geo
+	%    },
+%
+%  And node sm seafoam:
+%
+%    node sm seafoam/.style={
+	%        base box, rounded shape, no border,
+	%        fill=seafoam,
+	%        font tier small,         % ← replaces font=\small\sffamily
+	%        text=black, small geo
+	%    },
+%
+%  And node chip teal:
+%
+%    node chip teal/.style={
+	%        base box, pill shape, no border,
+	%        fill=teal,
+	%        font tier chip,          % ← replaces font=\footnotesize\sffamily
+	%        text=white, chip geo
+	%    },
+%
+% ══════════════════════════════════════════════════════
